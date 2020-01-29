@@ -11,4 +11,9 @@ class PhpstormHandoutController extends Controller
     {
         Applicant::query()->create(['name' => $request->input('name')]);
     }
+
+    public function index()
+    {
+        return response()->json(Applicant::query()->pluck('name'));
+    }
 }
