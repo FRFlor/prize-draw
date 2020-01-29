@@ -22,3 +22,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/phpstorm/register', 'PhpstormHandoutController@register');
 Route::get('/phpstorm/applicants', 'PhpstormHandoutController@index');
 Route::view('/phpstorm/raffle', 'raffle');
+Route::view('/phpstorm', 'enroll');
