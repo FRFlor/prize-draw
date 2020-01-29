@@ -20,7 +20,7 @@
 
         async mounted() {
             const response = await axios.get<string[]>('/phpstorm/applicants');
-            this.applicants =  response.data;
+            this.applicants = response.data;
         }
 
         beforeDestroy() {
@@ -31,16 +31,13 @@
 
         startRaffling() {
             this.raffleInterval = setInterval(() => {
-                this.applicants.splice(0, 1);
+                this.applicants.splice(Math.floor(Math.random() * this.applicants.length), 1);
 
                 if (this.applicants.length <= 1) {
                     clearInterval(this.raffleInterval);
                 }
             }, 500);
         }
-
-
-
     }
 </script>
 
