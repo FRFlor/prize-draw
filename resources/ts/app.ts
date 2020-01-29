@@ -1,8 +1,8 @@
 import './bootstrap';
 import Vue from 'vue';
-import ExampleComponent from './components/ExampleComponent.vue';
+import RaffleBox from './components/RaffleBox.vue';
 
 new Vue({
     el: '#app',
-    components: {ExampleComponent}
+    components: {RaffleBox}
 });
