@@ -14,10 +14,15 @@
     export default class RegistrationForm extends Vue {
             name: string = "";
 
+            redirectTo(path: string) {
+                window.location.assign(path);
+            }
+
             async register() {
                 try {
                     await axios.post('/phpstorm/register', {name: this.name});
-                    window.location.assign('/phpstorm/raffle');
+                    this.redirectTo('/phpstorm/raffle');
+
                 } catch (e) {
                     alert('Ooops! Look at the console.');
                     console.error(e);

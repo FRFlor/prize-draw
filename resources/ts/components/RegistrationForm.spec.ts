@@ -9,11 +9,8 @@ describe('Registration', () => {
     let mockBackend: MockAdapter;
 
     beforeEach(async () => {
-        // @ts-ignore
-        window.location = {
-            assign: jest.fn()
-        };
         wrapper = shallowMount(RegistrationForm);
+        wrapper.setMethods({redirectTo: jest.fn()});
         mockBackend = new MockAdapter(axios);
         mockBackend.onPost('/phpstorm/register').reply(201);
 
@@ -26,7 +23,7 @@ describe('Registration', () => {
         expect(JSON.parse(mockBackend.history.post[0].data)).toEqual({name: 'Nick'});
     });
 
-    xit('Redirects to raffle list page upon successful register', () => {
-        expect(window.location.assign).toHaveBeenCalledWith('/phpstorm/raffle');
+    it('Redirects to raffle list page upon successful register', () => {
+        expect(wrapper.vm['redirectTo']).toHaveBeenCalledWith('/phpstorm/raffle');
     });
 });
