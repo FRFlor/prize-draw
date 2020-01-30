@@ -1,7 +1,8 @@
 <template>
     <div class="raffle-box">
-        <button v-if="true"  class="start-raffling mb-4" @click="startRaffling">Start Raffling!</button>
-        <div v-else>Please wait for the raffle! </div>
+        <button v-if="true" class="start-raffling mb-4" @click="startRaffling">Start Raffling!</button>
+        <div v-else>Please wait for the raffle!</div>
+
         <div class="row">
             <div class="applicant-name col-sm-4 my-3"
                  v-for="(applicant, index) in applicants"
@@ -14,9 +15,8 @@
             </div>
         </div>
 
-
         <div class="winner-box" v-show="isShowingWinner">
-            Congratulations! {{applicants[0]}} you won!
+            Congratulations! {{applicants[0]}}, you won!
         </div>
     </div>
 </template>
@@ -59,6 +59,7 @@
     h5 {
         margin: 0;
     }
+
     .winner-box {
         position: absolute;
         top: 0;
@@ -66,9 +67,9 @@
         right: 0;
         bottom: 0;
         display: flex;
-        justify-content:  center;
+        justify-content: center;
         align-items: center;
-        background-color: hsla(0,0,0,0.5);
+        background-color: hsla(0, 0, 0, 0.5);
         color: deepskyblue;
         font-size: 5rem;
         text-shadow: 2px 2px #1b1e21;
