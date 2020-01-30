@@ -55,5 +55,15 @@ describe('RaffleBox', () => {
 
             expect(wrapper.findAll('.applicant-name')).toHaveLength(1);
         });
+
+        it("Displays the winner", () => {
+            wrapper.find('.start-raffling').trigger('click');
+
+            expect(wrapper.find('.winner-box').isVisible()).toBe(false);
+            jest.advanceTimersByTime(allApplicantsNames.length * 500);
+
+            expect(wrapper.find('.winner-box').isVisible()).toBe(true);
+            expect(wrapper.find('.winner-box').text()).toContain('Congratulations');
+        });
     });
 });
