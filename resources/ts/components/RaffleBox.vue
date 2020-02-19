@@ -32,7 +32,7 @@
         isShowingWinner: boolean = false;
 
         async mounted() {
-            const response = await axios.get<string[]>('/phpstorm/applicants');
+            const response = await axios.get<string[]>('/webstorm/applicants');
             this.applicants = response.data;
         }
 
