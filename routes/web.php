@@ -18,4 +18,4 @@ Route::post('/webstorm/register', 'PhpstormHandoutController@register');
 Route::get('/webstorm/applicants', 'PhpstormHandoutController@index');
 Route::view('/webstorm/raffle', 'raffle');
 Route::view('/webstorm', 'enroll');
-Route::view('/', 'enroll');
+Route::redirect('/', '/webstorm/raffle');
