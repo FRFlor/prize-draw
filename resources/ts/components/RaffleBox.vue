@@ -1,6 +1,6 @@
 <template>
     <div class="raffle-box">
-        <button v-if="true" class="start-raffling mb-4" @click="startRaffling">Start Raffling!</button>
+        <button v-if="true"  :disabled="raffleInterval" class="start-raffling mb-4" @click="startRaffling">Start Raffling!</button>
         <div v-else>Please wait for the raffle!</div>
 
         <div class="row">
