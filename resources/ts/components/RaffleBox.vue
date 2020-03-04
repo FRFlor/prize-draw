@@ -3,14 +3,16 @@
         <button :disabled="raffleInterval" class="start-raffling" @click="startRaffling">Start Raffling!</button>
 
         <div class="running-list">
+            <h2>In The Running</h2>
             <div class="applicant-name"
                  v-for="(applicant, index) in applicants"
                  :key="`running-${index}`">
-                <h5 class="">{{applicant}}</h5>
+                {{applicant}}
             </div>
         </div>
 
         <div class="eliminated-list">
+            <h2>Eliminated</h2>
             <div class="applicant-name"
                  v-for="(applicant, index) in eliminatedApplicants"
                  :key="`eliminated-${index}`"
