@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <div class="eliminated-list">
+            <div class="drawn-names-list">
                 <h2>Names Drawn</h2>
                 <div class="applicant-name"
                      :style="`font-size: ${getFontSize(index)}rem;`"
@@ -149,7 +149,7 @@
     .lists {
         display: flex;
 
-        .running-list, .eliminated-list {
+        .running-list, .drawn-names-list {
             width: 50%;
             line-height: 1.5;
             font-size: 1.4rem;

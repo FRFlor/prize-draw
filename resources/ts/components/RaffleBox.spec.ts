@@ -70,11 +70,11 @@ describe('RaffleBox', () => {
 
             jest.advanceTimersByTime(500);
             await flushPromises();
-            expect(wrapper.find('.eliminated-list').findAll('.applicant-name')).toHaveLength(1);
+            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name')).toHaveLength(1);
 
             jest.advanceTimersByTime(500);
             await flushPromises();
-            expect(wrapper.find('.eliminated-list').findAll('.applicant-name')).toHaveLength(2);
+            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name')).toHaveLength(2);
         });
 
         it('displays the placement number of the drawn applicant', async () => {
@@ -82,15 +82,15 @@ describe('RaffleBox', () => {
 
             jest.advanceTimersByTime(500);
             await flushPromises();
-            expect(wrapper.find('.eliminated-list').findAll('.applicant-name').at(0).text()).toContain(allApplicantsNames.length);
+            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0).text()).toContain(allApplicantsNames.length);
 
             jest.advanceTimersByTime(500);
             await flushPromises();
-            expect(wrapper.find('.eliminated-list').findAll('.applicant-name').at(0).text()).toContain(allApplicantsNames.length - 1);
+            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0).text()).toContain(allApplicantsNames.length - 1);
 
             jest.advanceTimersByTime(500);
             await flushPromises();
-            expect(wrapper.find('.eliminated-list').findAll('.applicant-name').at(0).text()).toContain(allApplicantsNames.length - 2);
+            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0).text()).toContain(allApplicantsNames.length - 2);
         });
 
         it('stops raffling when there are no running applicants left', async () => {
