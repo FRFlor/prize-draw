@@ -1,9 +1,10 @@
 <template>
     <div class="raffle-box">
-        <button v-show="!raffleInterval" class="start-raffling" @click="startRaffling">Start Raffling!</button>
-
-        <h2 v-show="raffleInterval" class="winner-header">Winner</h2>
-        <div class="winner-box" v-show="raffleInterval" v-text="winnerName"/>
+        <div class="upper">
+            <button v-show="!raffleInterval" class="start-raffling" @click="startRaffling">Start Raffling!</button>
+            <h2 v-show="raffleInterval" class="winner-header">Winner</h2>
+            <div class="winner-box" v-show="raffleInterval" v-text="winnerName || '???'"/>
+        </div>
 
         <div class="lists">
             <div class="running-list">
@@ -75,6 +76,10 @@
         font-family: sans-serif;
     }
 
+    .upper {
+        min-height: 12rem;
+    }
+
     .winner-header {
         font-size: 3rem;
         font-weight: 800;
@@ -86,10 +91,11 @@
     .winner-box {
         display: inline-block;
         min-width: 40rem;
-        min-height: 3rem;
+        line-height: 1;
     }
 
     .start-raffling {
+        margin-top: 3rem;
         color: #dd6b20;
     }
 

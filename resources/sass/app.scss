@@ -3,3 +3,23 @@
 
 // Variables
 @import 'variables';
+
+
+h1 {
+    font-size: 4.5rem;
+    text-transform: uppercase;
+    color: #dd6b20;
+    letter-spacing: 0.2rem;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+html {
+    background: #dd6b20;
+    padding: 0.6rem;
+}
+
+body {
+    padding-top: 2rem;
+    background: white;
+}

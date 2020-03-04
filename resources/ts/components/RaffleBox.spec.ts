@@ -47,7 +47,7 @@ describe('RaffleBox', () => {
 
             expect(wrapper.find('.winner-box').isVisible()).toBe(true);
             expect(wrapper.find('.start-raffling').isVisible()).toBe(false);
-            expect(wrapper.find('.winner-box').text()).toBe("");
+            expect(wrapper.find('.winner-box').text()).toBe("???");
         });
 
         it('removes a name from the running list every half second', async () => {
