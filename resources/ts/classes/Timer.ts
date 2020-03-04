@@ -1,5 +1,5 @@
-const QUICKEST_WAIT_MS: number = 100;
-const LONGEST_WAIT_MS: number = 650;
+const QUICKEST_WAIT_MS: number = 50;
+const LONGEST_WAIT_MS: number = 500;
 
 export function getWaitTime(position: number, total: number): number {
     const power = getInterpolationPower(total);
