@@ -20,7 +20,10 @@ class HandoutTest extends TestCase
     {
         $allApplicants = factory(Applicant::class, 15)->create();
         $applicantNames = $allApplicants->map(function ($applicant) {
-            return $applicant->name;
+            return [
+                'id' => $applicant->id,
+                'name' => $applicant->name
+            ];
         })->toArray();
 
         $this->getJson('/applicants')

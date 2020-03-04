@@ -3,6 +3,7 @@ import RaffleBox from './RaffleBox.vue';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import flushPromises from 'flush-promises';
+import {IApplicant} from '../types';
 
 jest.useFakeTimers();
 jest.mock('../classes/Timer.ts', () => ({
@@ -13,12 +14,12 @@ describe('RaffleBox', () => {
     let mockBackend: MockAdapter;
     let wrapper: Wrapper<RaffleBox>;
 
-    const allApplicantsNames = [
-        'Nick',
-        'Grant',
-        'Adam',
-        'Colin',
-        'Dan'
+    const allApplicantsNames: IApplicant[] = [
+        {id: 1, name: 'Nick'},
+        {id: 2, name: 'Grant'},
+        {id: 3, name: 'Adam'},
+        {id: 4, name: 'Colin'},
+        {id: 5, name: 'Dan'},
     ];
 
     beforeEach(async () => {
@@ -114,7 +115,7 @@ describe('RaffleBox', () => {
             await flushPromises();
 
             expect(wrapper.find('.winner-box').isVisible()).toBe(true);
-            const lastName = allApplicantsNames[allApplicantsNames.length - 1];
+            const lastName = allApplicantsNames[allApplicantsNames.length - 1].name;
             expect(wrapper.find('.winner-box').text()).toContain(lastName);
 
             //@ts-ignore

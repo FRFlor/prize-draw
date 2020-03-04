@@ -13,9 +13,9 @@
                 <h2>In The Running</h2>
                 <transition-group name="running-applicants">
                     <div class="applicant-name"
-                         v-for="(applicant, index) in applicants"
-                         :key="`${applicant}`">
-                        {{applicant}}
+                         v-for="applicant in applicants"
+                         :key="applicant.id">
+                        {{applicant.name}}
                     </div>
                 </transition-group>
             </div>
@@ -26,8 +26,8 @@
                     <div class="applicant-name"
                          :style="`font-size: ${getFontSize(index)}rem;`"
                          v-for="(applicant, index) in eliminatedApplicants"
-                         :key="`${applicants.length + index + 1}. ${applicant}`">
-                        {{applicants.length + index + 1}}. {{applicant}}
+                         :key="applicant.id">
+                        {{applicants.length + index + 1}}. {{applicant.name}}
                     </div>
                 </transition-group>
 
@@ -40,16 +40,17 @@
     import {Component, Vue} from 'vue-property-decorator';
     import axios from 'axios';
     import {getWaitTime} from '../classes/Timer';
+    import {IApplicant} from '../types';
 
     @Component
     export default class RaffleBox extends Vue {
-        applicants: string[] = [];
-        eliminatedApplicants: string[] = [];
+        applicants: IApplicant[] = [];
+        eliminatedApplicants: IApplicant[] = [];
         isRaffling: boolean = false;
         winnerName: string = '';
 
         async mounted() {
-            const response = await axios.get<string[]>('/applicants');
+            const response = await axios.get<IApplicant[]>('/applicants');
             this.applicants = response.data;
         }
 
@@ -67,7 +68,7 @@
                 }
 
                 if (this.applicants.length === 0) {
-                    this.winnerName = this.eliminatedApplicants[0];
+                    this.winnerName = this.eliminatedApplicants[0].name;
                     this.isRaffling = false;
                 }
             }, getWaitTime(this.eliminatedApplicants.length, this.eliminatedApplicants.length + this.applicants.length));

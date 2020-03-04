@@ -14,6 +14,6 @@ class HandoutController extends Controller
 
     public function index()
     {
-        return response()->json(Applicant::query()->pluck('name'));
+        return response()->json(Applicant::query()->select('id', 'name')->get());
     }
 }
