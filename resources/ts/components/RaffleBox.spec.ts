@@ -34,6 +34,22 @@ describe('RaffleBox', () => {
     });
 
     describe('starts raffling when the raffle button is clicked', () => {
+        it('displays the start raffling button and not the winner box until the raffle begins', () => {
+           expect(wrapper.find('.winner-box').isVisible()).toBe(false);
+           expect(wrapper.find('.start-raffling').isVisible()).toBe(true);
+        });
+
+        it('hides the raffling button and displays the winner box with no name as soon as the raffling begins', async () =>{
+            wrapper.find('.start-raffling').trigger('click');
+
+            jest.advanceTimersByTime(500);
+            await flushPromises();
+
+            expect(wrapper.find('.winner-box').isVisible()).toBe(true);
+            expect(wrapper.find('.start-raffling').isVisible()).toBe(false);
+            expect(wrapper.find('.winner-box').text()).toBe("");
+        });
+
         it('removes a name from the running list every half second', async () => {
             wrapper.find('.start-raffling').trigger('click');
 
@@ -58,8 +74,7 @@ describe('RaffleBox', () => {
             expect(wrapper.find('.eliminated-list').findAll('.applicant-name')).toHaveLength(2);
         });
 
-
-        it('stops raffling when there\'s a single applicant left', async () => {
+        it('stops raffling when there are no running applicants left', async () => {
             wrapper.find('.start-raffling').trigger('click');
 
             const A_LONG_LONG_TIME_PRETTY_MUCH_HOW_LONG_IT_TAKES_FOR_PHPSTORM_TO_INDEX = 1000000;
@@ -67,10 +82,11 @@ describe('RaffleBox', () => {
             jest.advanceTimersByTime(A_LONG_LONG_TIME_PRETTY_MUCH_HOW_LONG_IT_TAKES_FOR_PHPSTORM_TO_INDEX);
             await flushPromises();
 
-            expect(wrapper.find('.running-list').findAll('.applicant-name')).toHaveLength(1);
+            expect(wrapper.find('.running-list').findAll('.applicant-name')).toHaveLength(0);
         });
 
         it('Displays the winner', async () => {
+            jest.spyOn(global.Math, 'random').mockReturnValue(0);
             wrapper.find('.start-raffling').trigger('click');
 
             expect(wrapper.find('.winner-box').isVisible()).toBe(false);
@@ -79,7 +95,11 @@ describe('RaffleBox', () => {
             await flushPromises();
 
             expect(wrapper.find('.winner-box').isVisible()).toBe(true);
-            expect(wrapper.find('.winner-box').text()).toContain('Congratulations');
+            const lastName = allApplicantsNames[allApplicantsNames.length - 1];
+            expect(wrapper.find('.winner-box').text()).toContain(lastName);
+
+            //@ts-ignore
+            global.Math.random.mockRestore();
         });
     });
 });

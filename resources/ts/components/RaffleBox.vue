@@ -1,6 +1,8 @@
 <template>
     <div class="raffle-box">
-        <button :disabled="raffleInterval" class="start-raffling" @click="startRaffling">Start Raffling!</button>
+        <button v-show="!raffleInterval" class="start-raffling" @click="startRaffling">Start Raffling!</button>
+
+        <div class="winner-box" v-show="raffleInterval" v-text="winnerName"/>
 
         <div class="running-list">
             <h2>In The Running</h2>
@@ -19,10 +21,6 @@
                  v-text="applicant">
             </div>
         </div>
-
-        <div class="winner-box" v-show="isShowingWinner">
-            Congratulations! {{applicants[0]}}, you won!
-        </div>
     </div>
 </template>
 
@@ -36,6 +34,7 @@
         eliminatedApplicants: string[] = [];
         raffleInterval;
         isShowingWinner: boolean = false;
+        winnerName: string = "";
 
         async mounted() {
             const response = await axios.get<string[]>('/applicants');
@@ -53,11 +52,12 @@
                 const [pickedApplicant] = this.applicants.splice(Math.floor(Math.random() * this.applicants.length), 1);
 
                 if (pickedApplicant) {
-                    this.eliminatedApplicants.push(pickedApplicant);
+                    this.eliminatedApplicants.unshift(pickedApplicant);
                 }
 
-                if (this.applicants.length <= 1) {
+                if (this.applicants.length === 0) {
                     clearInterval(this.raffleInterval);
+                    this.winnerName = this.eliminatedApplicants[0];
                     setTimeout(() => this.isShowingWinner = true, 1000);
                 }
             }, 500);
