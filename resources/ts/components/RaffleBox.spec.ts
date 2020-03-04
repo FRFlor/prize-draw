@@ -120,5 +120,16 @@ describe('RaffleBox', () => {
             //@ts-ignore
             global.Math.random.mockRestore();
         });
+
+        it('Hides the running applicants list at the end of the raffle', async () => {
+            wrapper.find('.start-raffling').trigger('click');
+
+            expect(wrapper.find('.winner-box').isVisible()).toBe(false);
+            jest.advanceTimersByTime(allApplicantsNames.length * 500);
+            jest.advanceTimersByTime(500);
+            await flushPromises();
+
+            expect(wrapper.find('.running-list').isVisible()).toBe(false);
+        });
     });
 });

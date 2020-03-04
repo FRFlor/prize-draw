@@ -9,7 +9,7 @@
         </div>
 
         <div class="lists">
-            <div class="running-list">
+            <div class="running-list" v-show="applicants.length > 0">
                 <h2>In The Running</h2>
                 <div class="applicant-name"
                      v-for="(applicant, index) in applicants"
@@ -148,6 +148,7 @@
 
     .lists {
         display: flex;
+        justify-content: center;
 
         .running-list, .drawn-names-list {
             width: 50%;
