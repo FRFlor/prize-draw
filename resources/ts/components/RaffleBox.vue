@@ -159,15 +159,6 @@
         }
     }
 
-    /*.lists-move {*/
-    /*    transition: transform 500ms;*/
-    /*}*/
-
-    /*.lists-enter, .lists-leave-to {*/
-    /*    transition: transform 1s, opacity 500ms;*/
-    /*    opacity: 0;*/
-    /*    transform: translateX(50%);*/
-    /*}*/
     .running-applicants {
         opacity: 1;
     }
@@ -183,9 +174,7 @@
     }
 
     .drawn-applicants-enter {
-        transform: translateX(-25%);
+        transform: translateX(-10%);
         opacity: 0;
     }
-
-
 </style>
