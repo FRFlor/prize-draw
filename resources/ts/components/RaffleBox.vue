@@ -133,14 +133,21 @@
         }
     }
 
+    .start-raffling {
+        font-size: 1.5rem;
+    }
+
+    .winner-box {
+        font-size: 1rem;
+    }
+
     .start-raffling, .winner-box {
         text-transform: uppercase;
-        font-size: 1.5rem;
         letter-spacing: 0.2rem;
         background: white;
         border: 4px solid #dd6b20;
         font-weight: 800;
-        padding: 0.8rem 2.4rem;
+        padding: 0.8rem;
     }
 
     .lists {
@@ -185,6 +192,7 @@
 
         .start-raffling, .winner-box {
             font-size: 2rem;
+            padding: 0.8rem 2.4rem;
         }
     }
 </style>
