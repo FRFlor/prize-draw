@@ -20,8 +20,8 @@
                 <h2>Names Drawn</h2>
                 <div class="applicant-name"
                      v-for="(applicant, index) in eliminatedApplicants"
-                     :key="`eliminated-${index}`"
-                     v-text="`${applicant}`">
+                     :key="`eliminated-${index}`">
+                    {{applicants.length + index + 1}}. {{applicant}}
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                 const [pickedApplicant] = this.applicants.splice(Math.floor(Math.random() * this.applicants.length), 1);
 
                 if (pickedApplicant) {
-                    this.eliminatedApplicants.unshift(`${this.applicants.length + 1} ${pickedApplicant}`);
+                    this.eliminatedApplicants.unshift(pickedApplicant);
                 }
 
                 if(this.applicants.length > 0) {
