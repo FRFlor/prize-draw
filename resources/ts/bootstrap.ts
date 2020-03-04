@@ -1,4 +1,3 @@
-import 'bootstrap';
 import axios,{AxiosInstance} from 'axios';
 
 declare global {
