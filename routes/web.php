@@ -11,9 +11,7 @@
 |
 */
 //Auth::routes();
-
 //Route::get('/home', 'HomeController@index')->name('home');
 //Route::post('/register', 'HandoutController@register');
 Route::get('/applicants', 'HandoutController@index');
-Route::view('/raffle', 'raffle');
-Route::redirect('/', '/raffle');
+Route::view('/', 'raffle');
