@@ -1,9 +1,9 @@
 <template>
     <div class="raffle-box">
         <div class="upper">
-            <button v-show="!raffleInterval" class="start-raffling" @click="startRaffling">Start Raffling!</button>
-            <h2 v-show="raffleInterval" class="winner-header">Winner</h2>
-            <div class="winner-box" v-show="raffleInterval" v-text="winnerName || '???'"/>
+            <button v-show="!isRaffling && !isShowingWinner" class="start-raffling" @click="startRaffling">Start Raffling!</button>
+            <h2 v-show="isRaffling || isShowingWinner" class="winner-header">Winner</h2>
+            <div class="winner-box" v-show="isRaffling || isShowingWinner" v-text="winnerName || '???'"/>
         </div>
 
         <div class="lists">
@@ -17,7 +17,7 @@
             </div>
 
             <div class="eliminated-list">
-                <h2>Eliminated</h2>
+                <h2>Names Drawn</h2>
                 <div class="applicant-name"
                      v-for="(applicant, index) in eliminatedApplicants"
                      :key="`eliminated-${index}`"
@@ -31,13 +31,13 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import axios from 'axios';
+    import {getWaitTime} from '../classes/Timer';
 
     @Component
     export default class RaffleBox extends Vue {
         applicants: string[] = [];
         eliminatedApplicants: string[] = [];
-        raffleInterval = null;
-        isShowingWinner: boolean = false;
+        isRaffling: boolean = false;
         winnerName: string = '';
 
         async mounted() {
@@ -45,26 +45,33 @@
             this.applicants = response.data;
         }
 
-        beforeDestroy() {
-            if (this.raffleInterval) {
-                clearInterval(this.raffleInterval);
-            }
-        }
-
-        startRaffling() {
-            this.raffleInterval = setInterval(() => {
+        pullAnotherName() {
+            setTimeout(() => {
                 const [pickedApplicant] = this.applicants.splice(Math.floor(Math.random() * this.applicants.length), 1);
 
                 if (pickedApplicant) {
                     this.eliminatedApplicants.unshift(`${this.applicants.length + 1} ${pickedApplicant}`);
                 }
 
-                if (this.applicants.length === 0) {
-                    clearInterval(this.raffleInterval);
-                    this.winnerName = this.eliminatedApplicants[0];
-                    setTimeout(() => this.isShowingWinner = true, 1000);
+                if(this.applicants.length > 0) {
+                    this.pullAnotherName();
+                    return;
                 }
-            }, 500);
+
+                if (this.applicants.length === 0) {
+                    this.winnerName = this.eliminatedApplicants[0];
+                    this.isRaffling = false;
+                }
+            }, getWaitTime(this.eliminatedApplicants.length, this.eliminatedApplicants.length + this.applicants.length));
+        }
+
+        startRaffling() {
+            this.isRaffling = true;
+            this.pullAnotherName();
+        }
+
+        get isShowingWinner(): boolean {
+            return !! this.winnerName;
         }
     }
 </script>

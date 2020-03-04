@@ -5,6 +5,9 @@ import axios from 'axios';
 import flushPromises from 'flush-promises';
 
 jest.useFakeTimers();
+jest.mock('../classes/Timer.ts', () => ({
+   getWaitTime: jest.fn().mockReturnValue(500)
+}));
 
 describe('RaffleBox', () => {
     let mockBackend: MockAdapter;
