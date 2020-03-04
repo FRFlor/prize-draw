@@ -130,6 +130,14 @@
                 text-transform: uppercase;
             }
         }
+
+        .eliminated-list {
+            .applicant-name{
+                &:first-child {
+                    font-size: 2rem;
+                }
+            }
+        }
     }
 
 
