@@ -81,8 +81,8 @@
 
         getFontSize(index: number) {
             const cutOutPoint: number = 5;
-            const max: number = window.innerWidth >= 750 ? 3 : 2;
-            const min: number = window.innerWidth >= 750 ? 1 : 0.75;
+            const max: number = window.innerWidth >= 750 ? 3 : 1.5;
+            const min: number = window.innerWidth >= 750 ? 1 : 0.5;
             const power: number = 2;
 
             if (index >= cutOutPoint) {
@@ -135,7 +135,7 @@
 
     .start-raffling, .winner-box {
         text-transform: uppercase;
-        font-size: 2rem;
+        font-size: 1.5rem;
         letter-spacing: 0.2rem;
         background: white;
         border: 4px solid #dd6b20;
@@ -151,8 +151,8 @@
 
         .running-list, .drawn-names-list {
             width: 100%;
+            overflow: hidden;
             line-height: 1.5;
-            font-size: 1.4rem;
             letter-spacing: 0.2rem;
 
             h2 {
@@ -179,7 +179,12 @@
 
             .running-list, .drawn-names-list {
                 width: 50%;
+                overflow: visible;
             }
+        }
+
+        .start-raffling, .winner-box {
+            font-size: 2rem;
         }
     }
 </style>
