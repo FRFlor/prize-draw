@@ -5,6 +5,14 @@
 @import 'variables';
 
 
+header {
+    position: relative;
+    img {
+        position: absolute;
+        left: 4rem;
+        width: 300px;
+    }
+}
 h1 {
     font-size: 4.5rem;
     text-transform: uppercase;

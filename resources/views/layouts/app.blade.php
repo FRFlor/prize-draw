@@ -21,7 +21,10 @@
 </head>
 <body>
     <div id="app">
-        <h1>{{ config('app.name', 'Laravel') }}</h1>
+        <header>
+            <img src="https://res.cloudinary.com/felipeflor/image/upload/c_scale,f_auto,w_250/v1583333994/vehikl.png" alt="Vehikl Logo">
+            <h1>{{ config('app.name', 'Laravel') }}</h1>
+        </header>
         <main class="py-4 container">
             @yield('content')
         </main>
