@@ -1,7 +1,9 @@
 <template>
     <div class="raffle-box">
         <div class="upper">
-            <button v-show="!isRaffling && !isShowingWinner" class="start-raffling" @click="startRaffling">Start Raffling!</button>
+            <button v-show="!isRaffling && !isShowingWinner" class="start-raffling" @click="startRaffling">Start
+                Raffling!
+            </button>
             <h2 v-show="isRaffling || isShowingWinner" class="winner-header">Winner</h2>
             <div class="winner-box" v-show="isRaffling || isShowingWinner" v-text="winnerName || '???'"/>
         </div>
@@ -19,6 +21,7 @@
             <div class="eliminated-list">
                 <h2>Names Drawn</h2>
                 <div class="applicant-name"
+                     :style="`font-size: ${getFontSize(index)}rem;`"
                      v-for="(applicant, index) in eliminatedApplicants"
                      :key="`eliminated-${index}`">
                     {{applicants.length + index + 1}}. {{applicant}}
@@ -29,6 +32,16 @@
 </template>
 
 <script lang="ts">
+    /**
+     * s = a*i^3 + b;
+     *
+     * max = b;
+     * min = a*totalCount^3 + max
+     * a = (min - max)/totalCount^3;
+     *
+     * s = max - (max-min)*i^3/totalCount^3;
+     *
+     */
     import {Component, Vue} from 'vue-property-decorator';
     import axios from 'axios';
     import {getWaitTime} from '../classes/Timer';
@@ -53,7 +66,7 @@
                     this.eliminatedApplicants.unshift(pickedApplicant);
                 }
 
-                if(this.applicants.length > 0) {
+                if (this.applicants.length > 0) {
                     this.pullAnotherName();
                     return;
                 }
@@ -70,8 +83,20 @@
             this.pullAnotherName();
         }
 
+        getFontSize(index: number) {
+            const cutOutPoint: number = 5;
+            const max: number = 3;
+            const min: number = 1;
+            const power: number = 2;
+
+            if(index >= cutOutPoint) {
+                return min;
+            }
+            return max - (max-min)*Math.pow(index, power)/Math.pow(cutOutPoint, power);
+        }
+
         get isShowingWinner(): boolean {
-            return !! this.winnerName;
+            return !!this.winnerName;
         }
     }
 </script>
@@ -104,8 +129,9 @@
     .start-raffling {
         margin-top: 3rem;
         color: #dd6b20;
+
         &:hover {
-            background-color:#dd6b20;
+            background-color: #dd6b20;
             color: white;
         }
     }
@@ -132,14 +158,6 @@
             h2 {
                 font-size: 2rem;
                 text-transform: uppercase;
-            }
-        }
-
-        .eliminated-list {
-            .applicant-name{
-                &:first-child {
-                    font-size: 2rem;
-                }
             }
         }
     }
