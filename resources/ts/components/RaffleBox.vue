@@ -104,6 +104,10 @@
     .start-raffling {
         margin-top: 3rem;
         color: #dd6b20;
+        &:hover {
+            background-color:#dd6b20;
+            color: white;
+        }
     }
 
     .start-raffling, .winner-box {
