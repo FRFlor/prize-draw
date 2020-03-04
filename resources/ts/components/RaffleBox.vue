@@ -81,8 +81,8 @@
 
         getFontSize(index: number) {
             const cutOutPoint: number = 5;
-            const max: number = 3;
-            const min: number = 1;
+            const max: number = window.innerWidth >= 750 ? 3 : 2;
+            const min: number = window.innerWidth >= 750 ? 1 : 0.75;
             const power: number = 2;
 
             if (index >= cutOutPoint) {
@@ -118,7 +118,8 @@
 
     .winner-box {
         display: inline-block;
-        min-width: 40rem;
+        width: 80%;
+        max-width: 40rem;
         line-height: 1;
     }
 
@@ -145,9 +146,11 @@
     .lists {
         display: flex;
         justify-content: center;
+        align-items: center;
+        flex-direction: column-reverse;
 
         .running-list, .drawn-names-list {
-            width: 50%;
+            width: 100%;
             line-height: 1.5;
             font-size: 1.4rem;
             letter-spacing: 0.2rem;
@@ -167,5 +170,16 @@
         transition: all 2s;
         transform: translateX(50%);
         opacity: 0;
+    }
+
+    @media (min-width: 750px) {
+        .lists {
+            flex-direction: row;
+            align-items: start;
+
+            .running-list, .drawn-names-list {
+                width: 50%;
+            }
+        }
     }
 </style>
