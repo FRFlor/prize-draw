@@ -164,7 +164,7 @@
     }
 
     .running-applicants-leave-to {
-        transition: all 300ms;
+        transition: all 2s;
         transform: translateX(50%);
         opacity: 0;
     }
