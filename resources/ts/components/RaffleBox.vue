@@ -168,8 +168,4 @@
         transform: translateX(50%);
         opacity: 0;
     }
-
-    .drawn-applicants-move {
-        transition: transform 25ms;
-    }
 </style>
