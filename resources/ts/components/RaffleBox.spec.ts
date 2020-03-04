@@ -26,7 +26,7 @@ describe('RaffleBox', () => {
     });
 
     afterEach(() => {
-       mockBackend.restore();
+        mockBackend.restore();
     });
 
     it('requests all the applicants from the backend upon mount', async () => {
@@ -34,20 +34,32 @@ describe('RaffleBox', () => {
     });
 
     describe('starts raffling when the raffle button is clicked', () => {
-        it('removes a name every half second', async () => {
+        it('removes a name from the running list every half second', async () => {
             wrapper.find('.start-raffling').trigger('click');
 
             jest.advanceTimersByTime(500);
             await flushPromises();
-            expect(wrapper.findAll('.applicant-name')).toHaveLength(allApplicantsNames.length - 1);
+            expect(wrapper.find('.running-list').findAll('.applicant-name')).toHaveLength(allApplicantsNames.length - 1);
 
             jest.advanceTimersByTime(500);
             await flushPromises();
-            expect(wrapper.findAll('.applicant-name')).toHaveLength(allApplicantsNames.length - 2);
+            expect(wrapper.find('.running-list').findAll('.applicant-name')).toHaveLength(allApplicantsNames.length - 2);
+        });
+
+        it('adds the most recently removed name into the eliminated list', async () => {
+            wrapper.find('.start-raffling').trigger('click');
+
+            jest.advanceTimersByTime(500);
+            await flushPromises();
+            expect(wrapper.find('.eliminated-list').findAll('.applicant-name')).toHaveLength(1);
+
+            jest.advanceTimersByTime(500);
+            await flushPromises();
+            expect(wrapper.find('.eliminated-list').findAll('.applicant-name')).toHaveLength(2);
         });
 
 
-        it("stops raffling when there's a single applicant left", async () => {
+        it('stops raffling when there\'s a single applicant left', async () => {
             wrapper.find('.start-raffling').trigger('click');
 
             const A_LONG_LONG_TIME_PRETTY_MUCH_HOW_LONG_IT_TAKES_FOR_PHPSTORM_TO_INDEX = 1000000;
@@ -55,10 +67,10 @@ describe('RaffleBox', () => {
             jest.advanceTimersByTime(A_LONG_LONG_TIME_PRETTY_MUCH_HOW_LONG_IT_TAKES_FOR_PHPSTORM_TO_INDEX);
             await flushPromises();
 
-            expect(wrapper.findAll('.applicant-name')).toHaveLength(1);
+            expect(wrapper.find('.running-list').findAll('.applicant-name')).toHaveLength(1);
         });
 
-        it("Displays the winner", async () => {
+        it('Displays the winner', async () => {
             wrapper.find('.start-raffling').trigger('click');
 
             expect(wrapper.find('.winner-box').isVisible()).toBe(false);

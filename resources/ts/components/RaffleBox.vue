@@ -2,11 +2,19 @@
     <div class="raffle-box">
         <button :disabled="raffleInterval" class="start-raffling" @click="startRaffling">Start Raffling!</button>
 
-        <div class="">
+        <div class="running-list">
             <div class="applicant-name"
                  v-for="(applicant, index) in applicants"
-                 :key="index">
-                    <h5 class="">{{applicant}}</h5>
+                 :key="`running-${index}`">
+                <h5 class="">{{applicant}}</h5>
+            </div>
+        </div>
+
+        <div class="eliminated-list">
+            <div class="applicant-name"
+                 v-for="(applicant, index) in eliminatedApplicants"
+                 :key="`eliminated-${index}`"
+                 v-text="applicant">
             </div>
         </div>
 
@@ -23,6 +31,7 @@
     @Component
     export default class RaffleBox extends Vue {
         applicants: string[] = [];
+        eliminatedApplicants: string[] = [];
         raffleInterval;
         isShowingWinner: boolean = false;
 
@@ -39,7 +48,11 @@
 
         startRaffling() {
             this.raffleInterval = setInterval(() => {
-                this.applicants.splice(Math.floor(Math.random() * this.applicants.length), 1);
+                const [pickedApplicant] = this.applicants.splice(Math.floor(Math.random() * this.applicants.length), 1);
+
+                if (pickedApplicant) {
+                    this.eliminatedApplicants.push(pickedApplicant);
+                }
 
                 if (this.applicants.length <= 1) {
                     clearInterval(this.raffleInterval);
