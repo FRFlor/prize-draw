@@ -6,19 +6,20 @@
 
 
 header {
-    position: relative;
+    text-align: center;
+
     img {
-        position: absolute;
-        left: 4rem;
-        width: 300px;
+        width: 260px;
     }
 }
+
 h1 {
     font-size: 4.5rem;
+    margin-top: 0.3rem;
+    margin-bottom: 2rem;
     text-transform: uppercase;
     color: #dd6b20;
     letter-spacing: 0.2rem;
-    text-align: center;
     font-family: sans-serif;
 }
 

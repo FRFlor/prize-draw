@@ -169,12 +169,7 @@
         opacity: 0;
     }
 
-    .drawn-applicants-enter-active {
-        transition: all 300ms;
-    }
-
-    .drawn-applicants-enter {
-        transform: translateX(-10%);
-        opacity: 0;
+    .drawn-applicants-move {
+        transition: transform 25ms;
     }
 </style>
