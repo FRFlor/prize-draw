@@ -8,40 +8,35 @@
             <div class="winner-box" v-show="isRaffling || isShowingWinner" v-text="winnerName || '???'"/>
         </div>
 
-        <div class="lists">
-            <div class="running-list" v-show="applicants.length > 0">
+        <transition-group name="lists" class="lists">
+            <div key="running-list" class="running-list" v-show="applicants.length > 0">
                 <h2>In The Running</h2>
-                <div class="applicant-name"
-                     v-for="(applicant, index) in applicants"
-                     :key="`running-${index}`">
-                    {{applicant}}
-                </div>
+                <transition-group name="running-applicants">
+                    <div class="applicant-name"
+                         v-for="(applicant, index) in applicants"
+                         :key="`${applicant}`">
+                        {{applicant}}
+                    </div>
+                </transition-group>
             </div>
 
-            <div class="drawn-names-list">
+            <div key="drawn-names-list" class="drawn-names-list">
                 <h2>Names Drawn</h2>
-                <div class="applicant-name"
-                     :style="`font-size: ${getFontSize(index)}rem;`"
-                     v-for="(applicant, index) in eliminatedApplicants"
-                     :key="`eliminated-${index}`">
-                    {{applicants.length + index + 1}}. {{applicant}}
-                </div>
+                <transition-group name="drawn-applicants">
+                    <div class="applicant-name"
+                         :style="`font-size: ${getFontSize(index)}rem;`"
+                         v-for="(applicant, index) in eliminatedApplicants"
+                         :key="`${applicants.length + index + 1}. ${applicant}`">
+                        {{applicants.length + index + 1}}. {{applicant}}
+                    </div>
+                </transition-group>
+
             </div>
-        </div>
+        </transition-group>
     </div>
 </template>
 
 <script lang="ts">
-    /**
-     * s = a*i^3 + b;
-     *
-     * max = b;
-     * min = a*totalCount^3 + max
-     * a = (min - max)/totalCount^3;
-     *
-     * s = max - (max-min)*i^3/totalCount^3;
-     *
-     */
     import {Component, Vue} from 'vue-property-decorator';
     import axios from 'axios';
     import {getWaitTime} from '../classes/Timer';
@@ -89,10 +84,10 @@
             const min: number = 1;
             const power: number = 2;
 
-            if(index >= cutOutPoint) {
+            if (index >= cutOutPoint) {
                 return min;
             }
-            return max - (max-min)*Math.pow(index, power)/Math.pow(cutOutPoint, power);
+            return max - (max - min) * Math.pow(index, power) / Math.pow(cutOutPoint, power);
         }
 
         get isShowingWinner(): boolean {
@@ -161,6 +156,34 @@
                 text-transform: uppercase;
             }
         }
+    }
+
+    /*.lists-move {*/
+    /*    transition: transform 500ms;*/
+    /*}*/
+
+    /*.lists-enter, .lists-leave-to {*/
+    /*    transition: transform 1s, opacity 500ms;*/
+    /*    opacity: 0;*/
+    /*    transform: translateX(50%);*/
+    /*}*/
+    .running-applicants {
+        opacity: 1;
+    }
+
+    .running-applicants-leave-to {
+        transition: all 300ms;
+        transform: translateX(50%);
+        opacity: 0;
+    }
+
+    .drawn-applicants-enter-active {
+        transition: all 300ms;
+    }
+
+    .drawn-applicants-enter {
+        transform: translateX(-25%);
+        opacity: 0;
     }
 
 
