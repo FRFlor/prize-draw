@@ -13,9 +13,7 @@
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::post('/webstorm/register', 'PhpstormHandoutController@register');
-Route::get('/webstorm/applicants', 'PhpstormHandoutController@index');
-Route::view('/webstorm/raffle', 'raffle');
-//Route::view('/webstorm', 'enroll');
-Route::redirect('/', '/webstorm/raffle');
+Route::post('/register', 'HandoutController@register');
+Route::get('/applicants', 'HandoutController@index');
+Route::view('/raffle', 'raffle');
+Route::redirect('/', '/raffle');

@@ -20,8 +20,8 @@
 
             async register() {
                 try {
-                    await axios.post('/webstorm/register', {name: this.name});
-                    this.redirectTo('/webstorm/raffle');
+                    await axios.post('/register', {name: this.name});
+                    this.redirectTo('/raffle');
 
                 } catch (e) {
                     alert('Ooops! Look at the console.');

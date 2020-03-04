@@ -1,7 +1,6 @@
 <template>
     <div class="raffle-box">
-        <button v-if="true"  :disabled="raffleInterval" class="start-raffling mb-4" @click="startRaffling">Start Raffling!</button>
-        <div v-else>Please wait for the raffle!</div>
+        <button :disabled="raffleInterval" class="start-raffling mb-4" @click="startRaffling">Start Raffling!</button>
 
         <div class="row">
             <div class="applicant-name col-sm-4 my-3"
@@ -32,7 +31,7 @@
         isShowingWinner: boolean = false;
 
         async mounted() {
-            const response = await axios.get<string[]>('/webstorm/applicants');
+            const response = await axios.get<string[]>('/applicants');
             this.applicants = response.data;
         }
 

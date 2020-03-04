@@ -5,11 +5,12 @@ namespace Tests\Feature;
 use App\Applicant;
 use Tests\TestCase;
 
-class PhpstormHandoutTest extends TestCase
+class HandoutTest extends TestCase
 {
     public function testAPersonCanSignUpForThePoll()
     {
-        $this->postJson('/phpstorm/register', ['name' => 'Colin'])
+        $this->withoutExceptionHandling();
+        $this->postJson('/register', ['name' => 'Colin'])
             ->assertSuccessful();
 
         $this->assertNotEmpty(Applicant::query()->where('name', 'Colin')->first());
@@ -22,7 +23,7 @@ class PhpstormHandoutTest extends TestCase
             return $applicant->name;
         })->toArray();
 
-        $this->getJson('/phpstorm/applicants')
+        $this->getJson('/applicants')
             ->assertJsonCount($allApplicants->count())
             ->assertJson($applicantNames);
     }

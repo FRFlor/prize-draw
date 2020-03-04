@@ -18,7 +18,7 @@ describe('RaffleBox', () => {
 
     beforeEach(async () => {
         mockBackend = new MockAdapter(axios);
-        mockBackend.onGet('/phpstorm/applicants').reply(200, Object.values(allApplicantsNames));
+        mockBackend.onGet('/applicants').reply(200, Object.values(allApplicantsNames));
         wrapper = shallowMount(RaffleBox);
         await flushPromises();
     });

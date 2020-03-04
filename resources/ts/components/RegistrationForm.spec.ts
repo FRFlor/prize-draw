@@ -12,7 +12,7 @@ describe('Registration', () => {
         wrapper = shallowMount(RegistrationForm);
         wrapper.setMethods({redirectTo: jest.fn()});
         mockBackend = new MockAdapter(axios);
-        mockBackend.onPost('/phpstorm/register').reply(201);
+        mockBackend.onPost('/register').reply(201);
 
         wrapper.find('#name').setValue('Nick');
         wrapper.find('form').trigger('submit');
@@ -24,6 +24,6 @@ describe('Registration', () => {
     });
 
     it('Redirects to raffle list page upon successful register', () => {
-        expect(wrapper.vm['redirectTo']).toHaveBeenCalledWith('/phpstorm/raffle');
+        expect(wrapper.vm['redirectTo']).toHaveBeenCalledWith('/raffle');
     });
 });

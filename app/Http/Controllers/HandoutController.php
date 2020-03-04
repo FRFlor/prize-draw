@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Applicant;
 use Illuminate\Http\Request;
 
-class PhpstormHandoutController extends Controller
+class HandoutController extends Controller
 {
     public function register(Request $request)
     {
