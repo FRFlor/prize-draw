@@ -74,6 +74,22 @@ describe('RaffleBox', () => {
             expect(wrapper.find('.eliminated-list').findAll('.applicant-name')).toHaveLength(2);
         });
 
+        it('displays the placement number of the drawn applicant', async () => {
+            wrapper.find('.start-raffling').trigger('click');
+
+            jest.advanceTimersByTime(500);
+            await flushPromises();
+            expect(wrapper.find('.eliminated-list').findAll('.applicant-name').at(0).text()).toContain(allApplicantsNames.length);
+
+            jest.advanceTimersByTime(500);
+            await flushPromises();
+            expect(wrapper.find('.eliminated-list').findAll('.applicant-name').at(0).text()).toContain(allApplicantsNames.length - 1);
+
+            jest.advanceTimersByTime(500);
+            await flushPromises();
+            expect(wrapper.find('.eliminated-list').findAll('.applicant-name').at(0).text()).toContain(allApplicantsNames.length - 2);
+        });
+
         it('stops raffling when there are no running applicants left', async () => {
             wrapper.find('.start-raffling').trigger('click');
 

@@ -18,7 +18,7 @@
             <div class="applicant-name"
                  v-for="(applicant, index) in eliminatedApplicants"
                  :key="`eliminated-${index}`"
-                 v-text="applicant">
+                 v-text="`${applicant}`">
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@
                 const [pickedApplicant] = this.applicants.splice(Math.floor(Math.random() * this.applicants.length), 1);
 
                 if (pickedApplicant) {
-                    this.eliminatedApplicants.unshift(pickedApplicant);
+                    this.eliminatedApplicants.unshift(`${this.applicants.length + 1} ${pickedApplicant}`);
                 }
 
                 if (this.applicants.length === 0) {
