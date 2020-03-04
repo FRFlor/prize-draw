@@ -12,8 +12,10 @@ describe('RaffleBox', () => {
 
     const allApplicantsNames = [
         'Nick',
-        'Felipe',
-        'Colin'
+        'Grant',
+        'Adam',
+        'Colin',
+        'Dan'
     ];
 
     beforeEach(async () => {
