@@ -110,8 +110,7 @@ describe('RaffleBox', () => {
             wrapper.find('.start-raffling').trigger('click');
 
             expect(wrapper.find('.winner-box').isVisible()).toBe(false);
-            jest.advanceTimersByTime(allApplicantsNames.length * 500);
-            jest.advanceTimersByTime(500);
+            jest.runAllTimers();
             await flushPromises();
 
             expect(wrapper.find('.winner-box').isVisible()).toBe(true);
@@ -126,8 +125,7 @@ describe('RaffleBox', () => {
             wrapper.find('.start-raffling').trigger('click');
 
             expect(wrapper.find('.winner-box').isVisible()).toBe(false);
-            jest.advanceTimersByTime(allApplicantsNames.length * 500);
-            jest.advanceTimersByTime(500);
+            jest.runAllTimers();
             await flushPromises();
 
             expect(wrapper.find('.running-list').isVisible()).toBe(false);

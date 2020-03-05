@@ -9,7 +9,7 @@
         </div>
 
         <transition-group name="lists" class="lists">
-            <div key="running-list" class="running-list" v-show="applicants.length > 0">
+            <div key="running-list" class="running-list" v-show="! isShowingWinner">
                 <h2>In The Running</h2>
                 <transition-group name="running-applicants">
                     <div class="applicant-name"
@@ -68,8 +68,10 @@
                 }
 
                 if (this.applicants.length === 0) {
-                    this.winnerName = this.eliminatedApplicants[0].name;
-                    this.isRaffling = false;
+                    setTimeout(() => {
+                        this.winnerName = this.eliminatedApplicants[0].name;
+                        this.isRaffling = false;
+                    }, 1000);
                 }
             }, getWaitTime(this.eliminatedApplicants.length, this.eliminatedApplicants.length + this.applicants.length));
         }
