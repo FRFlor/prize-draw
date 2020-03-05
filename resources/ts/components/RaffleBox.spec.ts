@@ -117,8 +117,7 @@ describe('RaffleBox', () => {
             const lastName = allApplicantsNames[allApplicantsNames.length - 1].name;
             expect(wrapper.find('.winner-box').text()).toContain(lastName);
 
-            //@ts-ignore
-            global.Math.random.mockRestore();
+            global.Math.random['mockRestore']();
         });
 
         it('Hides the running applicants list at the end of the raffle', async () => {
