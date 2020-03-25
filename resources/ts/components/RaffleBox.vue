@@ -157,6 +157,7 @@
         justify-content: center;
         align-items: center;
         flex-direction: column-reverse;
+        margin-bottom: 2rem;
 
         .running-list, .drawn-names-list {
             width: 100%;
