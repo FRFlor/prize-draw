@@ -1,6 +1,6 @@
 <template>
     <div class="raffle-box">
-        <div class="upper">
+        <div class="upper mb-20">
             <button v-show="!isRaffling && !isShowingWinner" class="start-raffling" @click="startRaffling">Start
                 Raffling!
             </button>
@@ -10,7 +10,7 @@
 
         <transition-group name="lists" class="lists">
             <div key="running-list" class="running-list" v-show="! isShowingWinner">
-                <h2>In The Running</h2>
+                <h2 class="font-bold mb-6">In The Running</h2>
                 <transition-group name="running-applicants">
                     <div class="applicant-name"
                          v-for="applicant in applicants"
@@ -21,7 +21,7 @@
             </div>
 
             <div key="drawn-names-list" class="drawn-names-list">
-                <h2>Names Drawn</h2>
+                <h2 class="font-bold mb-6">Names Drawn</h2>
                 <transition-group name="drawn-applicants">
                     <div class="applicant-name"
                          :style="`font-size: ${getFontSize(index)}rem;`"
@@ -104,10 +104,6 @@
         color: #dd6b20;
         text-align: center;
         font-family: sans-serif;
-    }
-
-    .upper {
-        min-height: 12rem;
     }
 
     .winner-header {

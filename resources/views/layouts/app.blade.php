@@ -21,11 +21,11 @@
 </head>
 <body>
     <div id="app">
-        <header>
+        <header class="flex flex-col items-center">
             <img src="https://res.cloudinary.com/felipeflor/image/upload/c_scale,f_auto,w_250/v1583333994/vehikl.png" alt="Vehikl Logo">
-            <h1>{{ config('app.name', 'Laravel') }}</h1>
+            <h1 class="mb-1 font-bold">{{ config('app.name', 'Laravel') }}</h1>
         </header>
-        <main class="py-4 container">
+        <main class="mx-auto py-4 container">
             @yield('content')
         </main>
     </div>
