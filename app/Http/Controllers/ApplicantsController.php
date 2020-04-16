@@ -5,13 +5,8 @@ namespace App\Http\Controllers;
 use App\Applicant;
 use Illuminate\Http\Request;
 
-class HandoutController extends Controller
+class ApplicantsController extends Controller
 {
-    public function register(Request $request)
-    {
-        Applicant::query()->create(['name' => $request->input('name')]);
-    }
-
     public function index()
     {
         return response()->json(Applicant::query()->select('id', 'name')->get());
