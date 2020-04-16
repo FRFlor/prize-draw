@@ -21,6 +21,7 @@
         "flush-promises": "^1.0.2",
         "jest": "^25.1.0",
         "laravel-mix": "^5.0.1",
+        "laravel-mix-tailwind": "^0.1.0",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.20.1",
         "sass-loader": "7.*",
@@ -32,5 +33,7 @@
         "vue-property-decorator": "^8.3.0",
         "vue-template-compiler": "^2.6.11"
     },
-    "dependencies": {}
+    "dependencies": {
+        "tailwindcss": "^1.2.0"
+    }
 }
