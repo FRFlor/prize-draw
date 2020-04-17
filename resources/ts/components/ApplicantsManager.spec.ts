@@ -35,18 +35,16 @@ describe('ApplicantsManager', () => {
         applicants.forEach((applicant) => expect(wrapper.text()).toContain(applicant.name))
     });
 
-    describe('An existing list item', () => {
-       it('Updates an applicants name as the user types', async () => {
-           let chosenApplicant = applicants[0];
-           let nameInput = wrapper.find(`#applicant-input-${chosenApplicant.id}`);
-           let newName = 'New Applicant Name';
+    it('Updates an existing applicants name as the user types', async () => {
+        let chosenApplicant = applicants[0];
+        let nameInput = wrapper.find(`#applicant-input-${chosenApplicant.id}`);
+        let newName = 'New Applicant Name';
 
-           nameInput.setValue(newName);
-           await flushPromises();
-           let lastPutSubmission = mockBackend.history.put.pop();
+        nameInput.setValue(newName);
+        await flushPromises();
+        let lastPutSubmission = mockBackend.history.put.pop();
 
-           expect(lastPutSubmission.url).toEqual(`/applicants/${chosenApplicant.id}`);
-           expect(JSON.parse(lastPutSubmission.data)).toEqual({name: newName});
-       });
+        expect(lastPutSubmission.url).toEqual(`/applicants/${chosenApplicant.id}`);
+        expect(JSON.parse(lastPutSubmission.data)).toEqual({name: newName});
     });
 });
