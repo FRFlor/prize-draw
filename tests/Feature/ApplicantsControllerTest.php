@@ -17,7 +17,7 @@ class ApplicantsControllerTest extends TestCase
             ];
         })->toArray();
 
-        $this->getJson('/applicants')
+        $this->getJson(route('applicants.index'))
             ->assertJsonCount($allApplicants->count())
             ->assertJson($applicantNames);
     }

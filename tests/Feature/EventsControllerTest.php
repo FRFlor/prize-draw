@@ -13,7 +13,6 @@ class EventsControllerTest extends TestCase
 
     public function testAnAuthenticatedUserCanAccessTheEventManagementDashboard()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $this->actingAs($user)->get(route('event.dashboard'))->assertSuccessful();
     }
