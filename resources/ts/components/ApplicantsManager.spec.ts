@@ -20,6 +20,7 @@ describe('ApplicantsManager', () => {
     beforeEach(async () => {
         mockBackend = new MockAdapter(axios);
         mockBackend.onGet('/applicants').reply(200, Object.values(applicants));
+        mockBackend.onPut(new RegExp('/applicants/*')).reply(200, Object.values(applicants));
         wrapper = shallowMount(ApplicantsManager);
         await flushPromises()
     });
@@ -33,8 +34,17 @@ describe('ApplicantsManager', () => {
     });
 
     describe('An existing list item', () => {
-       it('Allows the name to be edited', () => {
-           expect(wrapper.find('.applicant').find('input[type="text"]').exists()).toBe(true)
+       it('Updates an applicants name as the user types', async () => {
+           let chosenApplicant = applicants[0];
+           let nameInput = wrapper.find(`#applicant-input-${chosenApplicant.id}`);
+           let newName = 'New Applicant Name';
+
+           nameInput.setValue(newName);
+           await flushPromises();
+           let lastPutSubmission = mockBackend.history.put.pop();
+
+           expect(lastPutSubmission.url).toEqual(`/applicants/${chosenApplicant.id}`);
+           expect(JSON.parse(lastPutSubmission.data)).toEqual({name: newName});
        });
     });
 });

@@ -4,7 +4,10 @@
             <li v-for="applicant in applicants"
                 class="applicant py-2 px-4 my-2 border-orange-700 border-2 rounded flex justify-between">
                 <span class="sr-only" v-text="applicant.name"/>
-                <input :aria-label="`applicant-input-${applicant.id}`" type="text"
+                <input :aria-label="`Applicant ${applicant.id} name input`"
+                       :id="`applicant-input-${applicant.id}`"
+                       @input="updateApplicant(applicant)"
+                       type="text"
                        class="truncate mr-2 flex-1 text-orange-900"
                        v-model="applicant.name"/>
                 <section class="controls flex">
@@ -27,6 +30,10 @@
         async created() {
             const response = await axios.get<IApplicant[]>('/applicants');
             this.applicants = response.data;
+        }
+
+        async updateApplicant(applicant: IApplicant) {
+            await axios.put(`/applicants/${applicant.id}`, {'name': applicant.name});
         }
     }
 </script>
