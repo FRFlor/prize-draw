@@ -6,12 +6,15 @@
                 <span class="sr-only" v-text="applicant.name"/>
                 <input :aria-label="`Applicant ${applicant.id} name input`"
                        :id="`applicant-input-${applicant.id}`"
-                       @input="updateApplicant(applicant)"
+                       @blur="updateApplicant(applicant)"
+                       @input="debounce(() => updateApplicant(applicant))"
                        type="text"
                        class="truncate mr-2 flex-1 text-orange-900"
                        v-model="applicant.name"/>
                 <section class="controls flex">
-                    <button class="mx-1 w-6 border-red-300 border"><i class="fa text-red-600 fa-trash-o" aria-label="delete" aria-hidden="true"></i></button>
+                    <button class="mx-1 w-6 border-red-300 border"><i class="fa text-red-600 fa-trash-o"
+                                                                      aria-label="delete" aria-hidden="true"></i>
+                    </button>
                 </section>
             </li>
         </ul>
@@ -22,8 +25,13 @@
     import {Component, Vue} from 'vue-property-decorator';
     import {IApplicant} from '../types';
     import axios from 'axios';
+    import debounce from 'lodash.debounce';
 
-    @Component
+    @Component({
+        methods: {
+            debounce: debounce(cb => cb(), 200)
+        }
+    })
     export default class ApplicantsManager extends Vue {
         applicants: IApplicant[] = [];
 

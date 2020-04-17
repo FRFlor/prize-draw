@@ -21,7 +21,9 @@ describe('ApplicantsManager', () => {
         mockBackend = new MockAdapter(axios);
         mockBackend.onGet('/applicants').reply(200, Object.values(applicants));
         mockBackend.onPut(new RegExp('/applicants/*')).reply(200, Object.values(applicants));
-        wrapper = shallowMount(ApplicantsManager);
+        wrapper = shallowMount(ApplicantsManager, {
+            methods: {debounce: (cb) => cb()}
+        });
         await flushPromises()
     });
 
