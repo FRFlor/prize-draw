@@ -20,7 +20,6 @@
                        class="truncate mr-2 flex-1 text-orange-900"
                        v-model="applicant.name"/>
                 <section class="controls flex">
-                    <button tabindex="-1" class="sr-only"/> <!-- TODO: Figure out why pressing enter while editing causes participant to be deleted without this button here -->
                     <button class="mx-1 w-6 border-red-300 border text-red-600 hover:text-white hover:bg-red-500"
                             :id="`delete-applicant-${applicant.id}`"
                             @click="deleteApplicant(applicant)">
