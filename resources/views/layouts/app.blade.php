@@ -28,7 +28,7 @@
         @endguest
         @auth
             @if(url()->current() !== route('raffle'))
-                <a class="mx-8 text-orange-700 underline uppercase" href="{{ route('raffle') }}">Open Raffle</a>
+                <a class="mx-8 text-orange-700 underline uppercase" href="{{ route('raffle') }}">Home</a>
             @else
                 <a class="mx-8 text-orange-700 underline uppercase" href="{{ route('event.dashboard') }}">Manage raffle</a>
             @endif
