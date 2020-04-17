@@ -27,6 +27,8 @@ describe('ApplicantsManager', () => {
 
             return [201, {id: randomId, name: givenPayload.name}]
         });
+        mockBackend.onDelete(new RegExp('/applicants/*')).reply(200);
+
         wrapper = shallowMount(ApplicantsManager, {
             methods: {debounce: (cb) => cb()}
         });
@@ -67,5 +69,18 @@ describe('ApplicantsManager', () => {
         expect(lastPostSubmission.url).toEqual(`/applicants`);
         expect(JSON.parse(lastPostSubmission.data)).toEqual({name: newApplicantName});
         expect(wrapper.text()).toContain(newApplicantName);
+    });
+
+
+    it('Allows an applicant to be deleted', async () => {
+        let targetApplicant = applicants[0];
+        expect(wrapper.text()).toContain(targetApplicant.name);
+
+        wrapper.find(`#delete-applicant-${targetApplicant.id}`).trigger('click');
+        await flushPromises();
+
+        let lastDeleteSubmission = mockBackend.history.delete.pop();
+        expect(lastDeleteSubmission.url).toEqual(`/applicants/${targetApplicant.id}`);
+        expect(wrapper.text()).not.toContain(targetApplicant.name);
     });
 });

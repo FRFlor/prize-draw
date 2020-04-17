@@ -20,8 +20,11 @@
                        class="truncate mr-2 flex-1 text-orange-900"
                        v-model="applicant.name"/>
                 <section class="controls flex">
-                    <button class="mx-1 w-6 border-red-300 border"><i class="fa text-red-600 fa-trash-o"
-                                                                      aria-label="delete" aria-hidden="true"></i>
+                    <button class="mx-1 w-6 border-red-300 border text-red-600 hover:text-white hover:bg-red-500"
+                            :id="`delete-applicant-${applicant.id}`"
+                            @click="deleteApplicant(applicant)">
+                        <i class="fa fa-trash-o"
+                           aria-label="delete" aria-hidden="true"/>
                     </button>
                 </section>
             </li>
@@ -42,7 +45,7 @@
     })
     export default class ApplicantsManager extends Vue {
         applicants: IApplicant[] = [];
-        newApplicantName: string = "";
+        newApplicantName: string = '';
 
         async created() {
             const response = await axios.get<IApplicant[]>('/applicants');
@@ -52,11 +55,16 @@
         async addNewApplicant() {
             const response = await axios.post<IApplicant>('/applicants', {name: this.newApplicantName});
             this.applicants.unshift(response.data);
-            this.newApplicantName = "";
+            this.newApplicantName = '';
         }
 
         async updateApplicant(applicant: IApplicant) {
             await axios.put(`/applicants/${applicant.id}`, {'name': applicant.name});
+        }
+
+        async deleteApplicant(target: IApplicant) {
+            await axios.delete(`/applicants/${target.id}`);
+            this.applicants = this.applicants.filter((applicant) => applicant.id != target.id);
         }
     }
 </script>
