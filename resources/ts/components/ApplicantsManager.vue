@@ -1,6 +1,14 @@
 <template>
     <form @submit.prevent>
         <ul class="w-full px-8 lg:mx-auto lg:max-w-5xl">
+            <li class="applicant py-2 px-4 my-2 border-orange-700 border-2 rounded">
+                <input @keyup.enter="debounce(addNewApplicant)"
+                       id="new-applicant-input"
+                       aria-label="new applicant name"
+                       placeholder="Enter new applicant name here..."
+                       class="w-full truncate mr-2 flex-1 text-orange-900"
+                       v-model="newApplicantName">
+            </li>
             <li v-for="applicant in applicants"
                 class="applicant py-2 px-4 my-2 border-orange-700 border-2 rounded flex justify-between">
                 <span class="sr-only" v-text="applicant.name"/>
@@ -29,15 +37,22 @@
 
     @Component({
         methods: {
-            debounce: debounce(cb => cb(), 200)
+            debounce: debounce(cb => cb(), 150)
         }
     })
     export default class ApplicantsManager extends Vue {
         applicants: IApplicant[] = [];
+        newApplicantName: string = "";
 
         async created() {
             const response = await axios.get<IApplicant[]>('/applicants');
             this.applicants = response.data;
+        }
+
+        async addNewApplicant() {
+            const response = await axios.post<IApplicant>('/applicants', {name: this.newApplicantName});
+            this.applicants.unshift(response.data);
+            this.newApplicantName = "";
         }
 
         async updateApplicant(applicant: IApplicant) {

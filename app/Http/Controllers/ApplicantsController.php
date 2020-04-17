@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Applicant;
 use App\Http\Requests\StoreApplicantRequest;
 use App\Http\Requests\UpdateApplicantRequest;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ApplicantsController extends Controller
 {
@@ -26,7 +26,9 @@ class ApplicantsController extends Controller
 
     public function store(StoreApplicantRequest $request)
     {
-        return Applicant::query()->create($request->validated());
+        $newApplicant = Applicant::query()->create($request->validated());
+
+        return response($newApplicant, Response::HTTP_CREATED);
     }
 
     public function destroy(Applicant $applicant)

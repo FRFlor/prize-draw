@@ -21,6 +21,12 @@ describe('ApplicantsManager', () => {
         mockBackend = new MockAdapter(axios);
         mockBackend.onGet('/applicants').reply(200, Object.values(applicants));
         mockBackend.onPut(new RegExp('/applicants/*')).reply(200, Object.values(applicants));
+        mockBackend.onPost('/applicants').reply((config) => {
+            let givenPayload = JSON.parse(config.data);
+            let randomId = Math.floor(Math.random()*1000);
+
+            return [201, {id: randomId, name: givenPayload.name}]
+        });
         wrapper = shallowMount(ApplicantsManager, {
             methods: {debounce: (cb) => cb()}
         });
@@ -42,9 +48,24 @@ describe('ApplicantsManager', () => {
 
         nameInput.setValue(newName);
         await flushPromises();
-        let lastPutSubmission = mockBackend.history.put.pop();
 
+        let lastPutSubmission = mockBackend.history.put.pop();
         expect(lastPutSubmission.url).toEqual(`/applicants/${chosenApplicant.id}`);
         expect(JSON.parse(lastPutSubmission.data)).toEqual({name: newName});
+    });
+
+    it('Allows a new applicant to be inserted to the list', async () => {
+        let newApplicantInput = wrapper.find('#new-applicant-input');
+        let newApplicantName = 'John Cena';
+
+        newApplicantInput.setValue(newApplicantName);
+        newApplicantInput.trigger('keyup.enter');
+        await flushPromises();
+
+        let lastPostSubmission = mockBackend.history.post.pop();
+
+        expect(lastPostSubmission.url).toEqual(`/applicants`);
+        expect(JSON.parse(lastPostSubmission.data)).toEqual({name: newApplicantName});
+        expect(wrapper.text()).toContain(newApplicantName);
     });
 });
