@@ -10,7 +10,7 @@ Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/applicants', 'ApplicantsController@index');
-Route::view('/', 'raffle');
+Route::view('/', 'raffle')->name('raffle');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', 'EventsController@dashboard')->name('event.dashboard');

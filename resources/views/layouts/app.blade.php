@@ -20,14 +20,35 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <header class="flex flex-col items-center">
-            <img src="https://res.cloudinary.com/felipeflor/image/upload/c_scale,f_auto,w_250/v1583333994/vehikl.png" alt="Vehikl Logo">
-            <h1 class="mb-1 font-bold">{{ config('app.name', 'Laravel') }}</h1>
-        </header>
-        <main class="mx-auto py-4 container">
-            @yield('content')
-        </main>
-    </div>
+<div id="app">
+    <nav class="flex justify-end py-6">
+        @guest
+            <a class="mx-8 text-orange-700 underline uppercase" href="{{ route('login') }}">Sign in</a>
+        @endguest
+        @auth
+            @if(url()->current() !== route('raffle'))
+                <a class="mx-8 text-orange-700 underline uppercase" href="{{ route('raffle') }}">Open Raffle</a>
+            @else
+                <a class="mx-8 text-orange-700 underline uppercase" href="{{ route('event.dashboard') }}">Manage raffle</a>
+            @endif
+            <a class="mx-8 text-orange-700 underline uppercase" href="{{ route('logout') }}"
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Sign out
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        @endauth
+    </nav>
+
+    <header class="flex flex-col items-center">
+        <img src="https://res.cloudinary.com/felipeflor/image/upload/c_scale,f_auto,w_250/v1583333994/vehikl.png"
+             alt="Vehikl Logo">
+        <h1 class="mb-1 font-bold">{{ config('app.name', 'Laravel') }}</h1>
+    </header>
+    <main class="mx-auto py-4 container">
+        @yield('content')
+    </main>
+</div>
 </body>
 </html>
