@@ -31,4 +31,10 @@ describe('ApplicantsManager', () => {
     it('Starts by displaying all existing applicants', async () => {
         applicants.forEach((applicant) => expect(wrapper.text()).toContain(applicant.name))
     });
+
+    describe('An existing list item', () => {
+       it('Allows the name to be edited', () => {
+           expect(wrapper.find('.applicant').find('input[type="text"]').exists()).toBe(true)
+       });
+    });
 });
