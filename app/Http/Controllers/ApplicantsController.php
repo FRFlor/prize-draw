@@ -16,7 +16,7 @@ class ApplicantsController extends Controller
 
     public function index()
     {
-        return response()->json(Applicant::query()->select('id', 'name')->get());
+        return response()->json(Applicant::query()->orderByDesc('id')->select('id', 'name')->get());
     }
 
     public function update(UpdateApplicantRequest $request, Applicant $applicant)
