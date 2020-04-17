@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Applicant;
+use App\Http\Requests\StoreApplicantRequest;
 use App\Http\Requests\UpdateApplicantRequest;
 use Illuminate\Http\Request;
 
@@ -21,5 +22,10 @@ class ApplicantsController extends Controller
     public function update(UpdateApplicantRequest $request, Applicant $applicant)
     {
         $applicant->update($request->validated());
+    }
+
+    public function store(StoreApplicantRequest $request)
+    {
+        return Applicant::query()->create($request->validated());
     }
 }

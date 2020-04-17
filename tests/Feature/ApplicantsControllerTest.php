@@ -30,8 +30,7 @@ class ApplicantsControllerTest extends TestCase
         $existingApplicant = factory(Applicant::class)->create();
         $newName = 'Jack Bauer is definitely not the initial name';
 
-        $this
-            ->actingAs($user)
+        $this->actingAs($user)
             ->putJson(route('applicants.update', ['applicant' => $existingApplicant->id]), ['name' => $newName])
             ->assertSuccessful();
 
@@ -43,8 +42,7 @@ class ApplicantsControllerTest extends TestCase
         $existingApplicant = factory(Applicant::class)->create();
         $newName = 'Jack Bauer is definitely not the initial name';
 
-        $this
-            ->putJson(route('applicants.update', ['applicant' => $existingApplicant->id]), ['name' => $newName])
+        $this->putJson(route('applicants.update', ['applicant' => $existingApplicant->id]), ['name' => $newName])
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
@@ -54,9 +52,27 @@ class ApplicantsControllerTest extends TestCase
         $existingApplicant = factory(Applicant::class)->create();
         $newName = '';
 
-        $this
-            ->actingAs($user)
+        $this->actingAs($user)
             ->putJson(route('applicants.update', ['applicant' => $existingApplicant->id]), ['name' => $newName])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function testAGuestCannotCreateANewApplicant()
+    {
+        $this->postJson(route('applicants.store'), ['name' => 'Foobar'])
+            ->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
+    public function testAnAuthenticatedUserCanCreateANewApplicant()
+    {
+        $user = factory(User::class)->create();
+        $newApplicantName = 'This is the new applicant name';
+
+        $response = $this->actingAs($user)
+            ->postJson(route('applicants.store'), ['name' => $newApplicantName]);
+
+        $response->assertSuccessful();
+        $response->assertJsonStructure(['id', 'name']);
+        $response->assertJsonFragment(['name' => $newApplicantName]);
     }
 }
