@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent>
+    <form @submit.prevent="$emit('submit')">
         <ul class="w-full px-8 lg:mx-auto lg:max-w-5xl">
             <li class="applicant py-2 px-4 my-2 border-orange-700 border-2 rounded">
                 <input @keyup.enter="debounce(addNewApplicant)"
@@ -19,14 +19,13 @@
                        type="text"
                        class="truncate mr-2 flex-1 text-orange-900"
                        v-model="applicant.name"/>
-                <section class="controls flex">
-                    <button class="mx-1 w-6 border-red-300 border text-red-600 hover:text-white hover:bg-red-500"
-                            :id="`delete-applicant-${applicant.id}`"
-                            @click="deleteApplicant(applicant)">
-                        <i class="fa fa-trash-o"
-                           aria-label="delete" aria-hidden="true"/>
-                    </button>
-                </section>
+                <button type="button"
+                        class="mx-1 w-6 border-red-300 border text-red-600 hover:text-white hover:bg-red-500"
+                        :id="`delete-applicant-${applicant.id}`"
+                        @click="deleteApplicant(applicant)">
+                    <i class="fa fa-trash-o"
+                       aria-label="delete" aria-hidden="true"/>
+                </button>
             </li>
         </ul>
     </form>
