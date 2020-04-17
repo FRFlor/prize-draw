@@ -28,4 +28,9 @@ class ApplicantsController extends Controller
     {
         return Applicant::query()->create($request->validated());
     }
+
+    public function destroy(Applicant $applicant)
+    {
+        $applicant->delete();
+    }
 }

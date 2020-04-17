@@ -75,4 +75,24 @@ class ApplicantsControllerTest extends TestCase
         $response->assertJsonStructure(['id', 'name']);
         $response->assertJsonFragment(['name' => $newApplicantName]);
     }
+
+    public function testAGuestCannotDeleteApplicants()
+    {
+        $targetApplicant = factory(Applicant::class)->create();
+
+        $this->deleteJson(route('applicants.destroy', ['applicant' => $targetApplicant->id]))
+            ->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
+    public function testAnAuthenticatedUserCanDeleteAnExistingApplicant()
+    {
+        $user = factory(User::class)->create();
+        $targetApplicant = factory(Applicant::class)->create();
+
+        $this->actingAs($user)
+            ->deleteJson(route('applicants.destroy', ['applicant' => $targetApplicant->id]))
+            ->assertSuccessful();
+
+        $this->assertEmpty(Applicant::query()->find($targetApplicant->id));
+    }
 }
