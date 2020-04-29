@@ -12,7 +12,7 @@ describe('Registration', () => {
         wrapper = shallowMount(JoinRaffle);
         wrapper.setMethods({redirectTo: jest.fn()});
         mockBackend = new MockAdapter(axios);
-        mockBackend.onPost('/join').reply(201);
+        mockBackend.onPost('/applicants').reply(201);
     });
 
     it('Allows a user to join the raffle', async () => {

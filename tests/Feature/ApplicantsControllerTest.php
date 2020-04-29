@@ -51,13 +51,24 @@ class ApplicantsControllerTest extends TestCase
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public function testAGuestCannotCreateANewApplicant()
+    public function testAGuestCannotCreateANewApplicantWithoutProvidingEmail()
     {
         $this->postJson(route('applicants.store'), ['name' => 'Foobar'])
-            ->assertStatus(Response::HTTP_UNAUTHORIZED);
+            ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
-    public function testAnAuthenticatedUserCanCreateANewApplicant()
+    public function testAGuestCanCreateANewApplicantWithAnUniqueEmail()
+    {
+        $participantAttributes = ['name' => 'Alex', 'email' => 'a.barry@vehikl.com'];
+        $this->postJson(route('applicants.store'), $participantAttributes)->assertSuccessful();
+
+        $this->assertNotEmpty(Applicant::query()->where($participantAttributes)->get());
+
+        $participantAttributes = ['name' => 'Mr. Barry', 'email' => 'a.barry@vehikl.com'];
+        $this->postJson(route('applicants.store'), $participantAttributes)->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function testAnAuthenticatedUserCanCreateANewApplicantWithoutEmail()
     {
         $user = factory(User::class)->create();
         $newApplicantName = 'This is the new applicant name';
