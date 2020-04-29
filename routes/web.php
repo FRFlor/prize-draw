@@ -13,6 +13,6 @@ Route::view('/', 'raffle')->name('raffle');
 Route::resource('applicants', 'ApplicantsController');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', 'EventsController@dashboard')->name('event.dashboard');
+    Route::view('/dashboard', 'dashboard')->name('event.dashboard');
 });
 
