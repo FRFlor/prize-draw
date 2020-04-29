@@ -24,7 +24,8 @@
 <div id="app">
     <nav class="flex justify-end py-6">
         @guest
-            <a class="mx-8 text-orange-700 underline uppercase" href="{{ route('login') }}">Sign in</a>
+            <a class="mx-8 text-orange-700 text-xl font-bold underline uppercase" href="{{ route('event.join')}}">Join Raffle</a>
+            <a class="mx-8 text-orange-700 text-xl font-bold underline uppercase" href="{{ route('login') }}">Sign in</a>
         @endguest
         @auth
             @if(url()->current() !== route('raffle'))

@@ -11,6 +11,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::view('/', 'raffle')->name('raffle');
 Route::resource('applicants', 'ApplicantsController');
+Route::view('/join', 'join')->name('event.join');
 
 Route::middleware('auth')->group(function () {
     Route::view('/dashboard', 'dashboard')->name('event.dashboard');
