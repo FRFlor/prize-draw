@@ -100,4 +100,24 @@ class ApplicantsControllerTest extends TestCase
 
         $this->assertEmpty(Applicant::query()->find($targetApplicant->id));
     }
+
+    public function testIndexProvidesTheApplicantsEmailsToAuthenticatedUsers()
+    {
+        $user = factory(User::class)->create();
+        factory(Applicant::class, 20)->create();
+
+        $this->actingAs($user)
+            ->getJson(route('applicants.index'))
+            ->assertSuccessful()
+            ->assertJsonStructure([['email']]);
+    }
+
+    public function testIndexDoesNotProvideTheApplicantsEmailsToGuests()
+    {
+        factory(Applicant::class, 20)->create();
+
+        $this->getJson(route('applicants.index'))
+            ->assertSuccessful()
+            ->assertDontSee('email');
+    }
 }

@@ -7,6 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Applicant::class, function (Faker $faker) {
     return [
-        'name' => $faker->name
+        'name' => $faker->name,
+        'email' => $faker->email
     ];
 });
