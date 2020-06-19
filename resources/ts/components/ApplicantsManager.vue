@@ -26,6 +26,7 @@
                     <i class="fa fa-trash-o"
                        aria-label="delete" aria-hidden="true"/>
                 </button>
+                <p v-text="applicant.email"/>
             </li>
         </ul>
     </form>

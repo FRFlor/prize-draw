@@ -6,11 +6,11 @@ import {IApplicant} from '../types';
 import axios from 'axios';
 
 const applicants: IApplicant[] = [
-    {id: 1, name: 'Nick'},
-    {id: 2, name: 'Grant'},
-    {id: 3, name: 'Adam'},
-    {id: 4, name: 'Colin'},
-    {id: 5, name: 'Dan'},
+    {id: 1, name: 'Nick', email: 'Nick@gmail.com'},
+    {id: 2, name: 'Grant', email: 'Grant@gmail.com'},
+    {id: 3, name: 'Adam', email: 'Adam@gmail.com'},
+    {id: 4, name: 'Colin', email: 'Colin@gmail.com'},
+    {id: 5, name: 'Dan', email: 'Dan@gmail.com'},
 ];
 
 describe('ApplicantsManager', () => {
@@ -39,8 +39,14 @@ describe('ApplicantsManager', () => {
         mockBackend.restore();
     });
 
-    it('Starts by displaying all existing applicants', async () => {
-        applicants.forEach((applicant) => expect(wrapper.text()).toContain(applicant.name))
+    describe('Starts by displaying all existing applicants', () => {
+        it('Displays all the applicants names', async () => {
+            applicants.forEach((applicant) => expect(wrapper.text()).toContain(applicant.name))
+        });
+
+        it('Displays all the applicants emails', async () => {
+            applicants.forEach((applicant) => expect(wrapper.text()).toContain(applicant.email))
+        });
     });
 
     it('Updates an existing applicants name as the user types', async () => {

@@ -101,7 +101,7 @@ class ApplicantsControllerTest extends TestCase
         $this->assertEmpty(Applicant::query()->find($targetApplicant->id));
     }
 
-    public function testIndexProvidesTheApplicantsEmailsToAuthenticatedUsers()
+    public function testIndexProvidesTheApplicantsEmailNameAndIdToAuthenticatedUsers()
     {
         $user = factory(User::class)->create();
         factory(Applicant::class, 20)->create();
@@ -109,7 +109,7 @@ class ApplicantsControllerTest extends TestCase
         $this->actingAs($user)
             ->getJson(route('applicants.index'))
             ->assertSuccessful()
-            ->assertJsonStructure([['email']]);
+            ->assertJsonStructure([['email', 'name', 'id']]);
     }
 
     public function testIndexDoesNotProvideTheApplicantsEmailsToGuests()

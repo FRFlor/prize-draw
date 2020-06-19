@@ -16,9 +16,11 @@ class ApplicantsController extends Controller
 
     public function index()
     {
-        $applicants = Applicant::query()->orderByDesc('id')->select('id', 'name');
+        $applicants = Applicant::query()->orderByDesc('id');
         if (auth()->user()) {
-            $applicants->select('email');
+            $applicants->select('id', 'name', 'email');
+        } else {
+            $applicants->select('id', 'name');
         }
         return response()->json($applicants->get());
     }
