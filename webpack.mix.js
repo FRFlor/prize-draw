@@ -16,4 +16,5 @@ require('laravel-mix-tailwind');
 mix.ts('resources/ts/app.ts', 'public/js').
     sass('resources/sass/app.scss', 'public/css').
     tailwind({configPath: './tailwind.config.js'})
-    .sourceMaps(false);
+    .sourceMaps(false)
+    .version();
