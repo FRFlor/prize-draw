@@ -59,7 +59,20 @@ describe('ApplicantsManager', () => {
 
         let lastPutSubmission = mockBackend.history.put.pop();
         expect(lastPutSubmission.url).toEqual(`/applicants/${chosenApplicant.id}`);
-        expect(JSON.parse(lastPutSubmission.data)).toEqual({name: newName});
+        expect(JSON.parse(lastPutSubmission.data)).toEqual({name: newName, email: chosenApplicant.email});
+    });
+
+    it('Updates an existing applicants email as the user types', async () => {
+        let chosenApplicant = applicants[0];
+        let nameInput = wrapper.find(`#applicant-email-input-${chosenApplicant.id}`);
+        let newEmail = 'new@email.test';
+
+        nameInput.setValue(newEmail);
+        await flushPromises();
+
+        let lastPutSubmission = mockBackend.history.put.pop();
+        expect(lastPutSubmission.url).toEqual(`/applicants/${chosenApplicant.id}`);
+        expect(JSON.parse(lastPutSubmission.data)).toEqual({name: chosenApplicant.name, email: newEmail});
     });
 
     it('Allows a new applicant to be inserted to the list', async () => {

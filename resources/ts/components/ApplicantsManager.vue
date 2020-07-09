@@ -11,22 +11,32 @@
             </li>
             <li v-for="applicant in applicants"
                 class="applicant py-2 px-4 my-2 border-orange-700 border-2 rounded flex justify-between">
-                <span class="sr-only" v-text="applicant.name"/>
-                <input :aria-label="`Applicant ${applicant.id} name input`"
-                       :id="`applicant-input-${applicant.id}`"
-                       @blur="updateApplicant(applicant)"
-                       @input="debounce(() => updateApplicant(applicant))"
-                       type="text"
-                       class="truncate mr-2 flex-1 text-orange-900"
-                       v-model="applicant.name"/>
+                <div class="flex flex-col flex-1">
+                    <span class="sr-only" v-text="applicant.name"/>
+                    <input :aria-label="`Applicant ${applicant.id} name input`"
+                           :id="`applicant-input-${applicant.id}`"
+                           @blur="updateApplicant(applicant)"
+                           @input="debounce(() => updateApplicant(applicant))"
+                           type="text"
+                           class="truncate mr-2 flex-1 text-orange-900"
+                           v-model="applicant.name"/>
+                    <p class="sr-only" v-text="applicant.email || '<No email given>'"/>
+                    <input :aria-label="`Applicant ${applicant.id} email input`"
+                           :id="`applicant-email-input-${applicant.id}`"
+                           @blur="updateApplicant(applicant)"
+                           @input="debounce(() => updateApplicant(applicant))"
+                           type="text"
+                           class="truncate mr-2 flex-1 text-orange-700"
+                           placeholder="<No email given>"
+                           v-model="applicant.email"/>
+                </div>
                 <button type="button"
-                        class="mx-1 w-6 border-red-300 border text-red-600 hover:text-white hover:bg-red-500"
+                        class="mx-1 w-12 border-red-300 border text-red-600 hover:text-white hover:bg-red-500"
                         :id="`delete-applicant-${applicant.id}`"
                         @click="deleteApplicant(applicant)">
                     <i class="fa fa-trash-o"
                        aria-label="delete" aria-hidden="true"/>
                 </button>
-                <p v-text="applicant.email"/>
             </li>
         </ul>
     </form>
@@ -59,7 +69,7 @@
         }
 
         async updateApplicant(applicant: IApplicant) {
-            await axios.put(`/applicants/${applicant.id}`, {'name': applicant.name});
+            await axios.put(`/applicants/${applicant.id}`, {name: applicant.name, email: applicant.email });
         }
 
         async deleteApplicant(target: IApplicant) {

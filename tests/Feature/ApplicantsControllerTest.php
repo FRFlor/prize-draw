@@ -31,6 +31,19 @@ class ApplicantsControllerTest extends TestCase
         $this->assertEquals($newName, $existingApplicant->fresh()->name, "The applicant's name was not updated");
     }
 
+    public function testAnAuthenticatedUserCanUpdateAGivenApplicantEmail()
+    {
+        $user = factory(User::class)->create();
+        $existingApplicant = factory(Applicant::class)->create();
+        $newEmail = 'jack@bauer.test';
+
+        $this->actingAs($user)
+            ->putJson(route('applicants.update', ['applicant' => $existingApplicant->id]), ['email' => $newEmail])
+            ->assertSuccessful();
+
+        $this->assertEquals($newEmail, $existingApplicant->fresh()->email, "The applicant's email was not updated");
+    }
+
     public function testAGuestCannotUpdateAnApplicantsName()
     {
         $existingApplicant = factory(Applicant::class)->create();

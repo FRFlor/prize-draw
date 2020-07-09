@@ -14,7 +14,8 @@ class UpdateApplicantRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required'
+            'name' => 'sometimes|required',
+            'email' => 'sometimes|required|email'
         ];
     }
 }
