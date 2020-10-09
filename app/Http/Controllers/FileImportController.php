@@ -18,7 +18,7 @@ class FileImportController extends Controller
         $content = array_slice($csv, 1);
 
         if($headers[0] !== 'name' || $headers[1] !== 'email') {
-            abort(Response::HTTP_UNPROCESSABLE_ENTITY, "Invalid csv! Please make sure the headers are 'name' and 'email' respectively");
+            return redirect()->back()->withErrors('Invalid csv! Please make sure the headers are \'name\' and \'email\' respectively');
         }
 
         $applicants = collect($content)->map(function($csvValues) use ($headers) {
@@ -30,8 +30,8 @@ class FileImportController extends Controller
 
 
         Applicant::query()->truncate();
+        Applicant::query()->insert($applicants);
 
-        return response()->json(Applicant::query()->insert($applicants), Response::HTTP_CREATED);
-
+        return redirect()->back();
     }
 }

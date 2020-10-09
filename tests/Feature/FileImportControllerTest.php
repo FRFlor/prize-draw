@@ -23,7 +23,7 @@ class FileImportControllerTest extends TestCase
 
         $this->actingAs($raffleAdmin)->post(route('import.csv'), [
             'applicants_csv' => UploadedFile::fake()->createWithContent('applicants.csv',$csvContent)
-        ])->assertSuccessful();
+        ]);
 
         $applicantsInRaffle = Applicant::all();
         $this->assertCount(count($applicantsInCsv), $applicantsInRaffle);
@@ -40,7 +40,7 @@ class FileImportControllerTest extends TestCase
 
         $this->actingAs($raffleAdmin)->post(route('import.csv'), [
             'applicants_csv' => UploadedFile::fake()->createWithContent('applicants.csv',$csvContent)
-        ])->assertSuccessful();
+        ]);
 
         $this->assertCount(count($applicantsInCsv), Applicant::all());
     }
