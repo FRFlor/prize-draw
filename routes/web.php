@@ -15,5 +15,6 @@ Route::resource('applicants', 'ApplicantsController');
 
 Route::middleware('auth')->group(function () {
     Route::view('/dashboard', 'dashboard')->name('event.dashboard');
+    Route::post('upload/csv', 'FileImportController@importFromCsv')->name('import.csv');
 });
 
