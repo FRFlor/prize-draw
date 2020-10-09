@@ -30,7 +30,7 @@ class FileImportController extends Controller
 
 
         Applicant::query()->truncate();
-        Applicant::query()->insert($applicants);
+        Applicant::query()->insertOrIgnore($applicants);
 
         return redirect()->back();
     }
