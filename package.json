@@ -14,7 +14,7 @@
         "@babel/core": "^7.8.3",
         "@types/jest": "^25.1.1",
         "@vue/test-utils": "^1.0.0-beta.31",
-        "axios": "^0.19",
+        "axios": "^0.21",
         "axios-mock-adapter": "^1.17.0",
         "babel-core": "^7.0.0-bridge.0",
         "cross-env": "^5.1",
