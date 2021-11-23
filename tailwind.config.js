@@ -5,6 +5,7 @@ module.exports = {
             './resources/views/**/*.blade.php',
         ],
     },
+    darkMode: false,
     theme: {
         extend: {},
     },

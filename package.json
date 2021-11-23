@@ -3,34 +3,37 @@
     "scripts": {
         "test": "jest --config jest.config.json",
         "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "npm run development -- --watch",
-        "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/rbin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "mix --production"
     },
     "devDependencies": {
         "@babel/core": "^7.8.3",
         "@types/jest": "^25.1.1",
         "@vue/test-utils": "^1.0.0-beta.31",
+        "autoprefixer": "^10.4.0",
         "axios": "^0.21",
         "axios-mock-adapter": "^1.17.0",
         "babel-core": "^7.0.0-bridge.0",
         "cross-env": "^5.1",
         "flush-promises": "^1.0.2",
         "jest": "^25.1.0",
-        "laravel-mix": "^5.0.1",
-        "laravel-mix-tailwind": "^0.1.0",
+        "laravel-mix": "^6.0.6",
         "lodash.debounce": "^4.0.8",
+        "postcss": "^8.3.11",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.20.1",
         "sass-loader": "7.*",
+        "tailwindcss": "^2.2.19",
         "ts-jest": "^25.0.0",
         "ts-loader": "^6.2.1",
         "typescript": "^3.7.5",
         "vue": "^2.5.17",
         "vue-jest": "^3.0.5",
+        "vue-loader": "^15.9.8",
         "vue-property-decorator": "^8.3.0",
         "vue-template-compiler": "^2.6.11"
     },
@@ -40,8 +43,6 @@
         "json-schema": "^0.4.0",
         "node-notifier": "^8.0.2",
         "nth-check": "^2.0.1",
-        "object-path": "^0.11.8",
-        "postcss": "^7.0.39",
-        "tailwindcss": "^1.2.0"
+        "object-path": "^0.11.8"
     }
 }
