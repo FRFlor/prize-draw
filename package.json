@@ -13,6 +13,7 @@
     "devDependencies": {
         "@babel/core": "^7.8.3",
         "@types/jest": "^25.1.1",
+        "@types/lodash.debounce": "^4.0.6",
         "@vue/test-utils": "^1.0.0-beta.31",
         "autoprefixer": "^10.4.0",
         "axios": "^0.21",
