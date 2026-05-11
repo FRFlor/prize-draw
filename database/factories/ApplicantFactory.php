@@ -1,13 +1,19 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Applicant;
-use Faker\Generator as Faker;
+use App\Models\Applicant;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Applicant::class, function (Faker $faker) {
-    return [
-        'name' => $faker->name,
-        'email' => $faker->email
-    ];
-});
+class ApplicantFactory extends Factory
+{
+    protected $model = Applicant::class;
+
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->name(),
+            'email' => fake()->safeEmail(),
+        ];
+    }
+}

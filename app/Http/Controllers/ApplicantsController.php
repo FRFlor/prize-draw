@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Applicant;
+use App\Models\Applicant;
 use App\Http\Requests\StoreApplicantRequest;
 use App\Http\Requests\UpdateApplicantRequest;
 use Illuminate\Http\Response;

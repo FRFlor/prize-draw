@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Applicant;
-use App\User;
+use App\Models\Applicant;
+use App\Models\User;
 use Illuminate\Http\Response;
 use Tests\TestCase;
 
@@ -11,7 +11,7 @@ class ApplicantsControllerTest extends TestCase
 {
     public function testItCanProvideAListOfAllApplicantsNames()
     {
-        $allApplicants = factory(Applicant::class, 15)->create();
+        $allApplicants = Applicant::factory()->count(15)->create();
 
         $this->getJson(route('applicants.index'))
             ->assertJsonCount($allApplicants->count())
@@ -20,8 +20,8 @@ class ApplicantsControllerTest extends TestCase
 
     public function testAnAuthenticatedUserCanUpdateAGivenApplicantName()
     {
-        $user = factory(User::class)->create();
-        $existingApplicant = factory(Applicant::class)->create();
+        $user = User::factory()->create();
+        $existingApplicant = Applicant::factory()->create();
         $newName = 'Jack Bauer is definitely not the initial name';
 
         $this->actingAs($user)
@@ -33,8 +33,8 @@ class ApplicantsControllerTest extends TestCase
 
     public function testAnAuthenticatedUserCanUpdateAGivenApplicantEmail()
     {
-        $user = factory(User::class)->create();
-        $existingApplicant = factory(Applicant::class)->create();
+        $user = User::factory()->create();
+        $existingApplicant = Applicant::factory()->create();
         $newEmail = 'jack@bauer.test';
 
         $this->actingAs($user)
@@ -46,7 +46,7 @@ class ApplicantsControllerTest extends TestCase
 
     public function testAGuestCannotUpdateAnApplicantsName()
     {
-        $existingApplicant = factory(Applicant::class)->create();
+        $existingApplicant = Applicant::factory()->create();
         $newName = 'Jack Bauer is definitely not the initial name';
 
         $this->putJson(route('applicants.update', ['applicant' => $existingApplicant->id]), ['name' => $newName])
@@ -55,8 +55,8 @@ class ApplicantsControllerTest extends TestCase
 
     public function testAnApplicantsNameCannotBeSetToEmpty()
     {
-        $user = factory(User::class)->create();
-        $existingApplicant = factory(Applicant::class)->create();
+        $user = User::factory()->create();
+        $existingApplicant = Applicant::factory()->create();
         $newName = '';
 
         $this->actingAs($user)
@@ -83,7 +83,7 @@ class ApplicantsControllerTest extends TestCase
 
     public function testAnAuthenticatedUserCanCreateANewApplicantWithoutEmail()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $newApplicantName = 'This is the new applicant name';
 
         $response = $this->actingAs($user)
@@ -96,7 +96,7 @@ class ApplicantsControllerTest extends TestCase
 
     public function testAGuestCannotDeleteApplicants()
     {
-        $targetApplicant = factory(Applicant::class)->create();
+        $targetApplicant = Applicant::factory()->create();
 
         $this->deleteJson(route('applicants.destroy', ['applicant' => $targetApplicant->id]))
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
@@ -104,8 +104,8 @@ class ApplicantsControllerTest extends TestCase
 
     public function testAnAuthenticatedUserCanDeleteAnExistingApplicant()
     {
-        $user = factory(User::class)->create();
-        $targetApplicant = factory(Applicant::class)->create();
+        $user = User::factory()->create();
+        $targetApplicant = Applicant::factory()->create();
 
         $this->actingAs($user)
             ->deleteJson(route('applicants.destroy', ['applicant' => $targetApplicant->id]))
@@ -116,8 +116,8 @@ class ApplicantsControllerTest extends TestCase
 
     public function testIndexProvidesTheApplicantsEmailNameAndIdToAuthenticatedUsers()
     {
-        $user = factory(User::class)->create();
-        factory(Applicant::class, 20)->create();
+        $user = User::factory()->create();
+        Applicant::factory()->count(20)->create();
 
         $this->actingAs($user)
             ->getJson(route('applicants.index'))
@@ -127,7 +127,7 @@ class ApplicantsControllerTest extends TestCase
 
     public function testIndexDoesNotProvideTheApplicantsEmailsToGuests()
     {
-        factory(Applicant::class, 20)->create();
+        Applicant::factory()->count(20)->create();
 
         $this->getJson(route('applicants.index'))
             ->assertSuccessful()
