@@ -22,8 +22,8 @@
     </form>
 </template>
 
-<script lang="ts">
-    import {Component, Vue} from 'vue-facing-decorator';
+<script setup lang="ts">
+    import {ref, computed} from 'vue';
     import axios from 'axios';
 
     interface IErrors {
@@ -31,33 +31,23 @@
         email?: string[]
     }
 
-    @Component
-    export default class RegistrationForm extends Vue {
-        name: string = '';
-        email: string = '';
-        errors: IErrors = {name: [], email: []};
+    const name = ref('');
+    const email = ref('');
+    const errors = ref<IErrors>({name: [], email: []});
 
-        get isReadyToSubmit(): boolean {
-            return !!this.name && !!this.email;
-        }
+    const isReadyToSubmit = computed(() => !!name.value && !!email.value);
 
-        redirectTo(path: string) {
-            window.location.assign(path);
-        }
+    async function join() {
+        try {
+            await axios.post('/applicants', {name: name.value, email: email.value.toLowerCase()});
+            window.location.assign('/');
+        } catch (e: any) {
+            if (e.response.status !== 422) {
+                alert('Something went wrong, please try again');
+            }
 
-        async join() {
-            try {
-                await axios.post('/applicants', {name: this.name, email: this.email.toLowerCase()});
-                this.redirectTo('/');
-
-            } catch (e) {
-                if (e.response.status !== 422) {
-                    alert('Something went wrong, please try again');
-                }
-
-                if (e.response.status === 422) {
-                    this.errors = e.response.data.errors;
-                }
+            if (e.response.status === 422) {
+                errors.value = e.response.data.errors;
             }
         }
     }

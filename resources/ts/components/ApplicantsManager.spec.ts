@@ -1,9 +1,11 @@
-import {shallowMount, Wrapper} from '@vue/test-utils';
+import {shallowMount} from '@vue/test-utils';
 import ApplicantsManager from './ApplicantsManager.vue';
 import flushPromises from 'flush-promises';
 import MockAdapter from 'axios-mock-adapter';
 import {IApplicant} from '../types';
 import axios from 'axios';
+
+jest.mock('lodash.debounce', () => (fn: any) => fn);
 
 const applicants: IApplicant[] = [
     {id: 1, name: 'Nick', email: 'Nick@gmail.com'},
@@ -14,7 +16,7 @@ const applicants: IApplicant[] = [
 ];
 
 describe('ApplicantsManager', () => {
-    let wrapper: Wrapper<ApplicantsManager>;
+    let wrapper: ReturnType<typeof shallowMount>;
     let mockBackend: MockAdapter;
 
     beforeEach(async () => {
@@ -29,9 +31,7 @@ describe('ApplicantsManager', () => {
         });
         mockBackend.onDelete(new RegExp('/applicants/*')).reply(200);
 
-        wrapper = shallowMount(ApplicantsManager, {
-            methods: {debounce: (cb) => cb()}
-        });
+        wrapper = shallowMount(ApplicantsManager);
         await flushPromises()
     });
 

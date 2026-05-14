@@ -42,36 +42,32 @@
     </form>
 </template>
 
-<script lang="ts">
-    import {Component, Vue} from 'vue-facing-decorator';
+<script setup lang="ts">
+    import {ref} from 'vue';
     import {IApplicant} from '../types';
     import axios from 'axios';
-    import debounce from 'lodash.debounce';
+    import lodashDebounce from 'lodash.debounce';
 
-    @Component
-    export default class ApplicantsManager extends Vue {
-        applicants: IApplicant[] = [];
-        newApplicantName: string = '';
-        debounce = debounce((cb: () => void) => cb(), 150);
+    const applicants = ref<IApplicant[]>([]);
+    const newApplicantName = ref('');
+    const debounce = lodashDebounce((cb: () => void) => cb(), 150);
 
-        async created() {
-            const response = await axios.get<IApplicant[]>('/applicants');
-            this.applicants = response.data;
-        }
+    axios.get<IApplicant[]>('/applicants').then((response) => {
+        applicants.value = response.data;
+    });
 
-        async addNewApplicant() {
-            const response = await axios.post<IApplicant>('/applicants', {name: this.newApplicantName});
-            this.applicants.unshift(response.data);
-            this.newApplicantName = '';
-        }
+    async function addNewApplicant() {
+        const response = await axios.post<IApplicant>('/applicants', {name: newApplicantName.value});
+        applicants.value.unshift(response.data);
+        newApplicantName.value = '';
+    }
 
-        async updateApplicant(applicant: IApplicant) {
-            await axios.put(`/applicants/${applicant.id}`, {name: applicant.name, email: applicant.email });
-        }
+    async function updateApplicant(applicant: IApplicant) {
+        await axios.put(`/applicants/${applicant.id}`, {name: applicant.name, email: applicant.email});
+    }
 
-        async deleteApplicant(target: IApplicant) {
-            await axios.delete(`/applicants/${target.id}`);
-            this.applicants = this.applicants.filter((applicant) => applicant.id != target.id);
-        }
+    async function deleteApplicant(target: IApplicant) {
+        await axios.delete(`/applicants/${target.id}`);
+        applicants.value = applicants.value.filter((applicant) => applicant.id != target.id);
     }
 </script>

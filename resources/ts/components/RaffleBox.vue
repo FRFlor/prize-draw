@@ -35,66 +35,61 @@
     </div>
 </template>
 
-<script lang="ts">
-    import {Component, Vue} from 'vue-facing-decorator';
+<script setup lang="ts">
+    import {ref, computed, onMounted} from 'vue';
     import axios from 'axios';
     import {getWaitTime} from '../classes/Timer';
     import {IApplicant} from '../types';
 
-    @Component
-    export default class RaffleBox extends Vue {
-        applicants: IApplicant[] = [];
-        eliminatedApplicants: IApplicant[] = [];
-        isRaffling: boolean = false;
-        winnerName: string = '';
+    const applicants = ref<IApplicant[]>([]);
+    const eliminatedApplicants = ref<IApplicant[]>([]);
+    const isRaffling = ref(false);
+    const winnerName = ref('');
 
-        async mounted() {
-            const response = await axios.get<IApplicant[]>('/applicants');
-            this.applicants = response.data;
-        }
+    const isShowingWinner = computed(() => !!winnerName.value);
 
-        pullAnotherName() {
-            setTimeout(() => {
-                const [pickedApplicant] = this.applicants.splice(Math.floor(Math.random() * this.applicants.length), 1);
+    onMounted(async () => {
+        const response = await axios.get<IApplicant[]>('/applicants');
+        applicants.value = response.data;
+    });
 
-                if (pickedApplicant) {
-                    this.eliminatedApplicants.unshift(pickedApplicant);
-                }
+    function pullAnotherName() {
+        setTimeout(() => {
+            const [pickedApplicant] = applicants.value.splice(Math.floor(Math.random() * applicants.value.length), 1);
 
-                if (this.applicants.length > 0) {
-                    this.pullAnotherName();
-                    return;
-                }
-
-                if (this.applicants.length === 0) {
-                    setTimeout(() => {
-                        this.winnerName = this.eliminatedApplicants[0].name;
-                        this.isRaffling = false;
-                    }, 1000);
-                }
-            }, getWaitTime(this.eliminatedApplicants.length, this.eliminatedApplicants.length + this.applicants.length));
-        }
-
-        startRaffling() {
-            this.isRaffling = true;
-            this.pullAnotherName();
-        }
-
-        getFontSize(index: number) {
-            const cutOutPoint: number = 5;
-            const max: number = window.innerWidth >= 750 ? 3 : 1.5;
-            const min: number = window.innerWidth >= 750 ? 1 : 0.5;
-            const power: number = 2;
-
-            if (index >= cutOutPoint) {
-                return min;
+            if (pickedApplicant) {
+                eliminatedApplicants.value.unshift(pickedApplicant);
             }
-            return max - (max - min) * Math.pow(index, power) / Math.pow(cutOutPoint, power);
-        }
 
-        get isShowingWinner(): boolean {
-            return !!this.winnerName;
+            if (applicants.value.length > 0) {
+                pullAnotherName();
+                return;
+            }
+
+            if (applicants.value.length === 0) {
+                setTimeout(() => {
+                    winnerName.value = eliminatedApplicants.value[0].name;
+                    isRaffling.value = false;
+                }, 1000);
+            }
+        }, getWaitTime(eliminatedApplicants.value.length, eliminatedApplicants.value.length + applicants.value.length));
+    }
+
+    function startRaffling() {
+        isRaffling.value = true;
+        pullAnotherName();
+    }
+
+    function getFontSize(index: number) {
+        const cutOutPoint = 5;
+        const max = window.innerWidth >= 750 ? 3 : 1.5;
+        const min = window.innerWidth >= 750 ? 1 : 0.5;
+        const power = 2;
+
+        if (index >= cutOutPoint) {
+            return min;
         }
+        return max - (max - min) * Math.pow(index, power) / Math.pow(cutOutPoint, power);
     }
 </script>
 

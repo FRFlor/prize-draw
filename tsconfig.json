@@ -5,9 +5,8 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "esModuleInterop": true,
-        "experimentalDecorators": true,
         "skipLibCheck": true,
-        "types": ["vite/client", "node"]
+        "types": ["vite/client", "node", "jest"]
     },
     "include": [
         "resources/ts/**/*"

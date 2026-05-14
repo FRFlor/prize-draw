@@ -1,4 +1,4 @@
-import {shallowMount, Wrapper} from '@vue/test-utils';
+import {shallowMount} from '@vue/test-utils';
 import RaffleBox from './RaffleBox.vue';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
@@ -12,7 +12,7 @@ jest.mock('../classes/Timer.ts', () => ({
 
 describe('RaffleBox', () => {
     let mockBackend: MockAdapter;
-    let wrapper: Wrapper<RaffleBox>;
+    let wrapper: ReturnType<typeof shallowMount>;
 
     const allApplicantsNames: IApplicant[] = [
         {id: 1, name: 'Nick'},
@@ -83,15 +83,15 @@ describe('RaffleBox', () => {
 
             jest.advanceTimersByTime(500);
             await flushPromises();
-            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0).text()).toContain(allApplicantsNames.length);
+            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0).text()).toContain(String(allApplicantsNames.length));
 
             jest.advanceTimersByTime(500);
             await flushPromises();
-            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0).text()).toContain(allApplicantsNames.length - 1);
+            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0).text()).toContain(String(allApplicantsNames.length - 1));
 
             jest.advanceTimersByTime(500);
             await flushPromises();
-            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0).text()).toContain(allApplicantsNames.length - 2);
+            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0).text()).toContain(String(allApplicantsNames.length - 2));
         });
 
         it('stops raffling when there are no running applicants left', async () => {
