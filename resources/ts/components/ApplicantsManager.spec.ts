@@ -57,7 +57,7 @@ describe('ApplicantsManager', () => {
         nameInput.setValue(newName);
         await flushPromises();
 
-        let lastPutSubmission = mockBackend.history.put.pop();
+        let lastPutSubmission = mockBackend.history.put.pop()!;
         expect(lastPutSubmission.url).toEqual(`/applicants/${chosenApplicant.id}`);
         expect(JSON.parse(lastPutSubmission.data)).toEqual({name: newName, email: chosenApplicant.email});
     });
@@ -70,7 +70,7 @@ describe('ApplicantsManager', () => {
         nameInput.setValue(newEmail);
         await flushPromises();
 
-        let lastPutSubmission = mockBackend.history.put.pop();
+        let lastPutSubmission = mockBackend.history.put.pop()!;
         expect(lastPutSubmission.url).toEqual(`/applicants/${chosenApplicant.id}`);
         expect(JSON.parse(lastPutSubmission.data)).toEqual({name: chosenApplicant.name, email: newEmail});
     });
@@ -83,7 +83,7 @@ describe('ApplicantsManager', () => {
         newApplicantInput.trigger('keyup.enter');
         await flushPromises();
 
-        let lastPostSubmission = mockBackend.history.post.pop();
+        let lastPostSubmission = mockBackend.history.post.pop()!;
 
         expect(lastPostSubmission.url).toEqual(`/applicants`);
         expect(JSON.parse(lastPostSubmission.data)).toEqual({name: newApplicantName});
@@ -98,7 +98,7 @@ describe('ApplicantsManager', () => {
         wrapper.find(`#delete-applicant-${targetApplicant.id}`).trigger('click');
         await flushPromises();
 
-        let lastDeleteSubmission = mockBackend.history.delete.pop();
+        let lastDeleteSubmission = mockBackend.history.delete.pop()!;
         expect(lastDeleteSubmission.url).toEqual(`/applicants/${targetApplicant.id}`);
         expect(wrapper.text()).not.toContain(targetApplicant.name);
     });

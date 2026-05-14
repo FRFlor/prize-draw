@@ -83,15 +83,15 @@ describe('RaffleBox', () => {
 
             vi.advanceTimersByTime(500);
             await flushPromises();
-            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0).text()).toContain(String(allApplicantsNames.length));
+            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0)!.text()).toContain(String(allApplicantsNames.length));
 
             vi.advanceTimersByTime(500);
             await flushPromises();
-            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0).text()).toContain(String(allApplicantsNames.length - 1));
+            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0)!.text()).toContain(String(allApplicantsNames.length - 1));
 
             vi.advanceTimersByTime(500);
             await flushPromises();
-            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0).text()).toContain(String(allApplicantsNames.length - 2));
+            expect(wrapper.find('.drawn-names-list').findAll('.applicant-name').at(0)!.text()).toContain(String(allApplicantsNames.length - 2));
         });
 
         it('stops raffling when there are no running applicants left', async () => {
@@ -106,7 +106,7 @@ describe('RaffleBox', () => {
         });
 
         it('Displays the winner', async () => {
-            vi.spyOn(global.Math, 'random').mockReturnValue(0);
+            const randomSpy = vi.spyOn(global.Math, 'random').mockReturnValue(0);
             wrapper.find('.start-raffling').trigger('click');
 
             expect(wrapper.find('.winner-box').isVisible()).toBe(false);
@@ -117,7 +117,7 @@ describe('RaffleBox', () => {
             const lastName = allApplicantsNames[allApplicantsNames.length - 1].name;
             expect(wrapper.find('.winner-box').text()).toContain(lastName);
 
-            global.Math.random['mockRestore']();
+            randomSpy.mockRestore();
         });
 
         it('Hides the running applicants list at the end of the raffle', async () => {
