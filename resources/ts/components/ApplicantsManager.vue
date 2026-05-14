@@ -42,20 +42,17 @@
     </form>
 </template>
 
-<script lang=ts>
-    import {Component, Vue} from 'vue-property-decorator';
+<script lang="ts">
+    import {Component, Vue} from 'vue-facing-decorator';
     import {IApplicant} from '../types';
     import axios from 'axios';
     import debounce from 'lodash.debounce';
 
-    @Component({
-        methods: {
-            debounce: debounce(cb => cb(), 150)
-        }
-    })
+    @Component
     export default class ApplicantsManager extends Vue {
         applicants: IApplicant[] = [];
         newApplicantName: string = '';
+        debounce = debounce((cb: () => void) => cb(), 150);
 
         async created() {
             const response = await axios.get<IApplicant[]>('/applicants');
@@ -78,6 +75,3 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-</style>

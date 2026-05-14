@@ -8,10 +8,10 @@
             <div class="winner-box" v-show="isRaffling || isShowingWinner" v-text="winnerName || '???'"/>
         </div>
 
-        <transition-group name="lists" class="lists">
-            <div key="running-list" class="running-list" v-show="! isShowingWinner">
+        <div class="lists">
+            <div class="running-list" v-show="! isShowingWinner">
                 <h2 class="font-bold mb-6">In The Running</h2>
-                <transition-group name="running-applicants">
+                <transition-group name="running-applicants" tag="div">
                     <div class="applicant-name"
                          v-for="applicant in applicants"
                          :key="applicant.id">
@@ -20,9 +20,9 @@
                 </transition-group>
             </div>
 
-            <div key="drawn-names-list" class="drawn-names-list">
+            <div class="drawn-names-list">
                 <h2 class="font-bold mb-6">Names Drawn</h2>
-                <transition-group name="drawn-applicants">
+                <transition-group name="drawn-applicants" tag="div">
                     <div class="applicant-name"
                          :style="`font-size: ${getFontSize(index)}rem;`"
                          v-for="(applicant, index) in eliminatedApplicants"
@@ -30,14 +30,13 @@
                         {{applicants.length + index + 1}}. {{applicant.name}}
                     </div>
                 </transition-group>
-
             </div>
-        </transition-group>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from 'vue-property-decorator';
+    import {Component, Vue} from 'vue-facing-decorator';
     import axios from 'axios';
     import {getWaitTime} from '../classes/Timer';
     import {IApplicant} from '../types';
