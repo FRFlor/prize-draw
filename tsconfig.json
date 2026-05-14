@@ -6,7 +6,7 @@
         "sourceMap": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
-        "types": ["vite/client", "node", "jest"]
+        "types": ["vite/client", "node", "vitest/globals"]
     },
     "include": [
         "resources/ts/**/*"

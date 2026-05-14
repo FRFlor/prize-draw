@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import {IApplicant} from '../types';
 import axios from 'axios';
 
-jest.mock('lodash.debounce', () => (fn: any) => fn);
+vi.mock('lodash.debounce', () => ({default: (fn: any) => fn}));
 
 const applicants: IApplicant[] = [
     {id: 1, name: 'Nick', email: 'Nick@gmail.com'},

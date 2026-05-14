@@ -7,10 +7,10 @@ import JoinRaffle from './JoinRaffle.vue';
 describe('Registration', () => {
     let wrapper: ReturnType<typeof shallowMount>;
     let mockBackend: MockAdapter;
-    let assignSpy: jest.Mock;
+    let assignSpy: ReturnType<typeof vi.fn>;
 
     beforeEach(async () => {
-        assignSpy = jest.fn();
+        assignSpy = vi.fn();
         Object.defineProperty(window, 'location', {
             configurable: true,
             value: {assign: assignSpy},
