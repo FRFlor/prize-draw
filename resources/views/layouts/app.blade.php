@@ -42,7 +42,7 @@
     <header class="flex flex-col items-center">
         <img src="https://res.cloudinary.com/felipeflor/image/upload/c_scale,f_auto,w_250/v1583333994/vehikl.png"
              alt="Vehikl Logo">
-        <h1 class="mb-1 font-bold">{{ config('app.name', 'Laravel') }}</h1>
+        <h1 class="mb-1 font-bold sr-only">{{ config('app.name', 'Laravel') }}</h1>
     </header>
     <main class="mx-auto py-4 container">
         @yield('content')
